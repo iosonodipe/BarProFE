@@ -1,1 +1,21 @@
-<p>home works!</p>
+<section class="hero-section">
+  <div class="container content">
+      <div class="row">
+          <div class="col-md-12">
+              <h1 class="display-4">Il tuo bar preferito a casa tua</h1>
+              <p class="lead">Create lifetime memories in unforgettable locations around the world</p>
+              <a href="#" class="btn btn-lg btn-custom">Choose your tour</a>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="top-barmen">
+  <div class="container mt-5">
+    <h2>I migliori barman su BarPRO</h2>
+    <div class="row g-2 mt-3">
+      <div class="col-12" *ngFor="let barman of topBarmen">
+        <app-barman-card [barman]="barman"></app-barman-card>
+      </div>
+    </div>
+  </div>
+</section>

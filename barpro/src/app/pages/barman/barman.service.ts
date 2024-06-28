@@ -9,7 +9,11 @@ import { IPage } from '../../models/i-page';
   providedIn: 'root'
 })
 export class BarmanService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getAll(0, 100).subscribe((IPage) => {
+      this.barmenSubj.next(IPage.content);
+    });
+  }
 
   barmenSubj = new BehaviorSubject<IBarman[]>([]);
   $barmen = this.barmenSubj.asObservable();

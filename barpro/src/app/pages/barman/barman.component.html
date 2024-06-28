@@ -1,1 +1,14 @@
-<p>barman works!</p>
+<div class="container">
+  <h2>{{ barman.firstName }} {{ barman.lastName }}</h2>
+  <div class="row">
+    <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+      <img [src]="barman.avatar" alt="" />
+    </div>
+    <div class="col-12 col-sm-7 col-md-8 col-lg-9">
+      <p>Descrizione: {{ barman.description }}</p>
+      <p>Anni di esperienza: {{ barman.experienceYears }}</p>
+      <p>Valutazione: {{ barman.rating }} su 5</p>
+    </div>
+  </div>
+
+</div>

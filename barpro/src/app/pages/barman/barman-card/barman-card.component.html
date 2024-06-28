@@ -1,0 +1,8 @@
+<div class="card">
+  <h5 class="card-header">{{barman.firstName}} {{barman.lastName}}</h5>
+  <div class="card-body">
+    <h5 class="card-title"> {{barman.experienceYears}} anni di esperienza</h5>
+    <h6 class="card-title"> Rating {{barman.rating}}/5</h6>
+    <a [routerLink]="['/barman', barman.id]" class="btn btn-primary">Dettagli</a>
+  </div>
+</div>
