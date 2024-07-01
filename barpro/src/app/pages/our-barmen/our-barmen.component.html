@@ -1,1 +1,47 @@
-<p>our-barmen works!</p>
+<div class="container mt-5">
+  <h2>I nostri barman</h2>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label for="sortBy" class="form-label">Ordina per</label>
+      <select id="sortBy" class="form-select" [(ngModel)]="sortBy" (change)="applyFilters()">
+        <option value="id">ID</option>
+        <option value="rating">Recensioni</option>
+        <option value="city">Città</option>
+      </select>
+    </div>
+    <div *ngIf="sortBy === 'city'" class="col-md-6">
+      <label for="city" class="form-label">Città</label>
+      <input id="city" type="text" class="form-control" [(ngModel)]="city" (input)="applyFilters()" />
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor="let barman of barmen" class="col-md-4 mb-4">
+      <div class="card">
+        <img [src]="barman.avatar ? barman.avatar : '/assets/img/avatar.webp'" class="card-img-top" alt="{{ barman.firstName }} {{ barman.lastName }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ barman.firstName }} {{ barman.lastName }}</h5>
+          <p class="card-text">{{ barman.description }}</p>
+          <p class="card-text">Recensioni: {{ barman.rating }}</p>
+          <p class="card-text">Città: {{ barman.city }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="page === 0">
+        <a class="page-link" (click)="changePage(page - 1)" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li *ngFor="let p of [].constructor(totalPages); let i = index" class="page-item" [class.active]="i === page">
+        <a class="page-link" (click)="changePage(i)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="page === totalPages - 1">
+        <a class="page-link" (click)="changePage(page + 1)" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

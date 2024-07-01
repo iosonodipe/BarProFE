@@ -27,6 +27,10 @@ export class BarmanService {
     return this.http.get<IPage<IBarman>>(`${this.apiUrl}/byCity?IPage=${IPage}&size=${size}&city=${city}`);
   }
 
+  getByRating(IPage: number = 0, size: number = 10): Observable<IPage<IBarman>> {
+    return this.http.get<IPage<IBarman>>(`${this.apiUrl}?IPage=${IPage}&size=${size}&sortBy=rating`);
+  }
+
   getById(id: number): Observable<IBarman> {
     return this.http.get<IBarman>(`${this.apiUrl}/${id}`);
   }

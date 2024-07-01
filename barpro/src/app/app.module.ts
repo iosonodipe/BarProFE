@@ -7,19 +7,23 @@ import { NgbCollapseModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './main-components/navbar/navbar.component';
 import { FooterComponent } from './main-components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BarmanModule } from './pages/barman/barman.module';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     NgbCollapseModule,
-    HttpClientModule
+    HttpClientModule,
+    BarmanModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,17 +7,17 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="#">Home</a>
+          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="#">Link</a>
+          <a class="nav-link" routerLink="/our-barmen">I nostri barman</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
-        <button *ngIf="!isUserLoggedIn" class="btn btn-outline-success" type="submit" routerLink="/auth/login">Login</button>
+        <a *ngIf="!isUserLoggedIn" class="btn btn-outline-success" routerLink="/auth/login">Login</a>
         <button *ngIf="isUserLoggedIn" class="btn btn-outline-danger" (click)="logout()">Logout</button>
       </form>
     </div>
