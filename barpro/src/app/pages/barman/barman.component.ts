@@ -1,3 +1,5 @@
+import { AuthService } from './../../auth/auth.service';
+import { BookingService } from './../booking/booking.service';
 import { Component } from '@angular/core';
 import { BarmanService } from './barman.service';
 import { IBarman } from '../../models/i-barman';
@@ -11,13 +13,23 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './barman.component.scss'
 })
 export class BarmanComponent {
+  isUserLoggedIn: boolean = false;
 
-  constructor(barmanSvc: BarmanService, private router: ActivatedRoute, private modalService: NgbModal) {
+  constructor(private authSvc: AuthService, private barmanSvc: BarmanService, private bookingSvc: BookingService, private router: ActivatedRoute, private modalService: NgbModal) {
     this.router.params.subscribe(params => {
       const id = +params['id']; // Converti il parametro ID a numero
+      this.bookingRequest.idBarman = id
       barmanSvc.getById(id).subscribe(barman => this.barman = barman);
     });
   }
+
+  ngOnInit(){
+    this.authSvc.isLoggedIn$.subscribe(data => {
+      this.isUserLoggedIn = data;
+    })
+  }
+
+
 
   barman: IBarman = {
     experienceYears: 0,
@@ -30,13 +42,14 @@ export class BarmanComponent {
     email: '',
     password: '',
     city: '',
-    avatar: '/assets/img/avatardefault_92824.webp'
+    avatar: ''
   }
 
   bookingRequest: IBookingRequest ={
     idUser: 0,
     idBarman: 0,
     date: '',
+    time: '',
     eventDetails: '',
     city: ''
   }
@@ -49,11 +62,31 @@ export class BarmanComponent {
     });
   }
 
-  submit(form: any) {
+  submit(form: any, modal: any) {
     if (form.valid) {
-      console.log('Form Data: ', form.value);
-      // Handle the form submission logic here
-      this.modalService.dismissAll(form.value);
+      this.setUserFromLocalStorage();
+      this.bookingRequest.date = this.formatLocalDateTime(this.bookingRequest.date, this.bookingRequest.time); // Formatta la data e l'orario per il server
+      console.log('Form Data: ', this.bookingRequest);
+      this.bookingSvc.createBooking(this.bookingRequest).subscribe()
+      modal.dismiss(this.bookingRequest);
     }
   }
+
+  setUserFromLocalStorage() {
+    const accessData = localStorage.getItem('accessData');
+    if (accessData) {
+      const parsedData = JSON.parse(accessData);
+      const userId = parsedData.userResponse?.user?.id;
+
+      if (userId) {
+        this.bookingRequest.idUser = userId;
+         // Imposta l'id dell'utente
+      }
+    }
+  }
+
+  private formatLocalDateTime(date: string, time: string): string {
+    return `${date}T${time}:00`;
+  }
+
 }

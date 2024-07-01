@@ -2,13 +2,16 @@
   <h2>{{ barman.firstName }} {{ barman.lastName }}</h2>
   <div class="row">
     <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-      <img [src]="barman.avatar" alt="" />
+      <img width="300" [src]="barman.avatar ? barman.avatar : '/assets/img/avatar.webp'" alt="barman-avatar" />
     </div>
     <div class="col-12 col-sm-7 col-md-8 col-lg-9">
       <p>Descrizione: {{ barman.description }}</p>
       <p>Anni di esperienza: {{ barman.experienceYears }}</p>
       <p>Valutazione: {{ barman.rating }} su 5</p>
-      <button class="btn btn-primary" (click)="openContactModal(content)">Contatta Barman</button>
+      <button *ngIf="isUserLoggedIn" class="btn btn-primary" (click)="openContactModal(content)">Contatta Barman</button>
+      <div *ngIf="!isUserLoggedIn" class="alert alert-warning" role="alert">
+        Effettua il login per contattare il barman!
+      </div>
     </div>
   </div>
   <ng-template #content let-modal>
@@ -20,21 +23,25 @@
       <form #contactForm="ngForm">
         <div class="mb-3">
           <label for="date" class="form-label">Data</label>
-          <input type="date" class="form-control" id="date" name="date" ngModel required>
+          <input type="date" class="form-control" id="date" name="date" [(ngModel)]="bookingRequest.date" required>
+        </div>
+        <div class="mb-3">
+          <label for="time" class="form-label">Ora</label>
+          <input type="time" id="time" class="form-control" [(ngModel)]="bookingRequest.time" name="time" required>
         </div>
         <div class="mb-3">
           <label for="eventDetail" class="form-label">Dettaglio Evento</label>
-          <textarea class="form-control" id="eventDetail" name="eventDetail" rows="3" ngModel required></textarea>
+          <textarea class="form-control" id="eventDetail" name="eventDetails" rows="3" [(ngModel)]="bookingRequest.eventDetails" required></textarea>
         </div>
         <div class="mb-3">
           <label for="city" class="form-label">Città</label>
-          <input type="text" class="form-control" id="city" name="city" ngModel required>
+          <input type="text" class="form-control" id="city" name="city" [(ngModel)]="bookingRequest.city" required>
         </div>
       </form>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annulla</button>
-      <button type="button" class="btn btn-primary" [disabled]="!contactForm.valid" (click)="submit(contactForm)">Invia</button>
+      <button type="button" class="btn btn-primary" [disabled]="!contactForm.valid" (click)="submit(contactForm, modal)">Invia</button>
     </div>
   </ng-template>
 </div>
