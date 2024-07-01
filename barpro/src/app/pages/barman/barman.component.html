@@ -8,7 +8,33 @@
       <p>Descrizione: {{ barman.description }}</p>
       <p>Anni di esperienza: {{ barman.experienceYears }}</p>
       <p>Valutazione: {{ barman.rating }} su 5</p>
+      <button class="btn btn-primary" (click)="openContactModal(content)">Contatta Barman</button>
     </div>
   </div>
-
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Contatta Barman</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form #contactForm="ngForm">
+        <div class="mb-3">
+          <label for="date" class="form-label">Data</label>
+          <input type="date" class="form-control" id="date" name="date" ngModel required>
+        </div>
+        <div class="mb-3">
+          <label for="eventDetail" class="form-label">Dettaglio Evento</label>
+          <textarea class="form-control" id="eventDetail" name="eventDetail" rows="3" ngModel required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="city" class="form-label">Città</label>
+          <input type="text" class="form-control" id="city" name="city" ngModel required>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annulla</button>
+      <button type="button" class="btn btn-primary" [disabled]="!contactForm.valid" (click)="submit(contactForm)">Invia</button>
+    </div>
+  </ng-template>
 </div>

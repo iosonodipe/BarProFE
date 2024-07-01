@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { BarmanRoutingModule } from './barman-routing.module';
 import { BarmanComponent } from './barman.component';
 import { BarmanCardComponent } from './barman-card/barman-card.component';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { BarmanCardComponent } from './barman-card/barman-card.component';
   ],
   imports: [
     CommonModule,
-    BarmanRoutingModule
+    BarmanRoutingModule,
+    FormsModule,
+    NgbModule
   ],
    exports: [
     BarmanCardComponent // Esportazione del componente
