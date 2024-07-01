@@ -20,7 +20,7 @@ export class BarmanService {
   apiUrl: string = environment.barmenUrl;
 
   getAll(IPage: number = 0, size: number = 10, sortBy: string = 'id'): Observable<IPage<IBarman>> {
-    return this.http.get<IPage<IBarman>>(`${this.apiUrl}?IPage=${IPage}&size=${size}&sortBy=${sortBy}`);
+    return this.http.get<IPage<IBarman>>(`${this.apiUrl}?page=${IPage}&size=${size}&sortBy=${sortBy}`);
   }
 
   getByCity(IPage: number = 0, size: number = 10, city: string): Observable<IPage<IBarman>> {
@@ -28,7 +28,7 @@ export class BarmanService {
   }
 
   getByRating(IPage: number = 0, size: number = 10): Observable<IPage<IBarman>> {
-    return this.http.get<IPage<IBarman>>(`${this.apiUrl}?IPage=${IPage}&size=${size}&sortBy=rating`);
+    return this.http.get<IPage<IBarman>>(`${this.apiUrl}?page=${IPage}&size=${size}&sortBy=rating`);
   }
 
   getById(id: number): Observable<IBarman> {

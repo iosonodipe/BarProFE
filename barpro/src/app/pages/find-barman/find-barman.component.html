@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <h2>Richiedi una quotazione</h2>
+  <form (ngSubmit)="submitRequest(quotationForm)" #quotationForm="ngForm">
+    <div class="mb-3">
+      <label for="eventDetails" class="form-label">Dettagli dell'evento</label>
+      <textarea id="eventDetails" class="form-control" [(ngModel)]="quotationRequest.eventDetails" name="eventDetails" required maxlength="300" #eventDetails="ngModel"></textarea>
+      <div *ngIf="eventDetails.invalid && (eventDetails.dirty || eventDetails.touched)" class="text-danger">
+        <div *ngIf="eventDetails.errors?.['required']">I dettagli dell'evento sono obbligatori.</div>
+        <div *ngIf="eventDetails.errors?.['maxlength']">I dettagli dell'evento non possono superare i 300 caratteri.</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="city" class="form-label">Città</label>
+      <input type="text" id="city" class="form-control" [(ngModel)]="quotationRequest.city" name="city" required #city="ngModel">
+      <div *ngIf="city.invalid && (city.dirty || city.touched)" class="text-danger">
+        <div *ngIf="city.errors?.['required']">La città è obbligatoria.</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="requestDate" class="form-label">Data della richiesta</label>
+      <input type="date" id="requestDate" class="form-control" [(ngModel)]="quotationRequest.requestDate" name="requestDate" required #requestDate="ngModel">
+      <div *ngIf="requestDate.invalid && (requestDate.dirty || requestDate.touched)" class="text-danger">
+        <div *ngIf="requestDate.errors?.['required']">La data della richiesta è obbligatoria.</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="requestTime" class="form-label">Ora della richiesta</label>
+      <input type="time" id="requestTime" class="form-control" [(ngModel)]="quotationRequest.requestTime" name="requestTime" required #requestTime="ngModel">
+      <div *ngIf="requestTime.invalid && (requestTime.dirty || requestTime.touched)" class="text-danger">
+        <div *ngIf="requestTime.errors?.['required']">L'ora della richiesta è obbligatoria.</div>
+      </div>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <button type="submit" class="btn btn-primary" [disabled]="quotationForm.invalid">Invia richiesta</button>
+  </form>
+</div>

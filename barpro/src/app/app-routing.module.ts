@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'quotation', loadChildren: () => import('./pages/quotation/quotation.module').then(m => m.QuotationModule) },
   {path: '', component: HomeComponent},
   { path: 'our-barmen', loadChildren: () => import('./pages/our-barmen/our-barmen.module').then(m => m.OurBarmenModule) },
+  { path: 'find-barman', loadChildren: () => import('./pages/find-barman/find-barman.module').then(m => m.FindBarmanModule) },
 ];
 
 @NgModule({

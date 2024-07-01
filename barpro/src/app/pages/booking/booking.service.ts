@@ -11,9 +11,6 @@ import { IBookingRequest } from '../../models/i-booking-request';
 })
 export class BookingService {
   constructor(private http: HttpClient) {
-    this.getAll(0, 100).subscribe((IPage) => {
-      this.bookingsSubj.next(IPage.content);
-    });
   }
 
   bookingsSubj = new BehaviorSubject<IBooking[]>([]);

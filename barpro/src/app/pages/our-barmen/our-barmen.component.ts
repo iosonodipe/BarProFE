@@ -40,7 +40,9 @@ export class OurBarmenComponent implements OnInit {
   }
 
   changePage(page: number): void {
-    this.page = page;
-    this.applyFilters();
+    if (page >= 0 && page < this.totalPages) {
+      this.page = page;
+      this.applyFilters();
+    }
   }
 }

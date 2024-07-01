@@ -16,15 +16,7 @@
   </div>
   <div class="row">
     <div *ngFor="let barman of barmen" class="col-md-4 mb-4">
-      <div class="card">
-        <img [src]="barman.avatar ? barman.avatar : '/assets/img/avatar.webp'" class="card-img-top" alt="{{ barman.firstName }} {{ barman.lastName }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ barman.firstName }} {{ barman.lastName }}</h5>
-          <p class="card-text">{{ barman.description }}</p>
-          <p class="card-text">Recensioni: {{ barman.rating }}</p>
-          <p class="card-text">Città: {{ barman.city }}</p>
-        </div>
-      </div>
+      <app-barman-card [barman]="barman"></app-barman-card>
     </div>
   </div>
   <nav aria-label="Page navigation">
