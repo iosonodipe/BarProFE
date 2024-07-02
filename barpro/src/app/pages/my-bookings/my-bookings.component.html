@@ -1,0 +1,47 @@
+<div class="container mt-5">
+  <ul ngbNav #nav="ngbNav" class="nav-tabs">
+    <li ngbNavItem>
+      <a ngbNavLink> Prenotazioni </a>
+      <ng-template ngbNavContent>
+        <div *ngIf="bookings.length == 0" class="alert alert-light" role="alert">
+          Nessuna prenotazione effettuata.
+        </div>
+        <div ngbAccordion *ngIf="bookings">
+          <div *ngFor="let booking of bookings" ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>{{booking.city}} - {{booking.date}} - Stato: {{booking.status}}</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
+                <p>Dettagli: {{booking.eventDetails}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </li>
+    <li ngbNavItem>
+      <a ngbNavLink> Richieste </a>
+      <ng-template ngbNavContent>
+        <div *ngIf="quotations.length == 0" class="alert alert-light" role="alert">
+          Nessuna richiesta di quotazione effettuata.
+        </div>
+        <div ngbAccordion *ngIf="quotations">
+          <div *ngFor="let quotation of quotations" ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}} - Stato: {{quotation.status}}</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <p>Dettagli: {{quotation.eventDetails}}</p>
+                <button type="button" class="btn btn-danger" (click)="deleteQuotation(quotation.id)">Elimina</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav"></div>
+</div>

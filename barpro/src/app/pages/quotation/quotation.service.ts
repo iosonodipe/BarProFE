@@ -28,6 +28,10 @@ export class QuotationService {
     return this.http.get<IPage<IQuotation>>(`${this.apiUrl}/byCity?page=${page}&size=${size}&city=${city}`);
   }
 
+  getAllByUser(page: number = 0, size: number = 10, sortBy: string = 'requestDate', id: number): Observable<IPage<IQuotation>> {
+    return this.http.get<IPage<IQuotation>>(`${this.apiUrl}/byUser/${id}?page=${page}&size=${size}&sortBy=${sortBy}`);
+  }
+
   createQuotation(quotation: IQuotationRequest): Observable<IQuotation> {
     return this.http.post<IQuotation>(this.apiUrl, quotation)
       .pipe(
@@ -64,7 +68,7 @@ export class QuotationService {
   }
 
   deleteQuotation(id: number): Observable<string> {
-    return this.http.delete<string>(`${this.apiUrl}/${id}`)
+    return this.http.delete<string>(`${this.apiUrl}/${id}`, { responseType: 'text' as 'json' })
       .pipe(
         tap(() => this.refreshQuotations())
       );

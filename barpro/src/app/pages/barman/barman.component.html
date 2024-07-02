@@ -24,18 +24,31 @@
         <div class="mb-3">
           <label for="date" class="form-label">Data</label>
           <input type="date" class="form-control" id="date" name="date" [(ngModel)]="bookingRequest.date" required>
+          <div *ngIf="contactForm.controls['date']?.touched && contactForm.controls['date']?.invalid" class="text-danger">
+            La data è obbligatoria.
+          </div>
         </div>
         <div class="mb-3">
           <label for="time" class="form-label">Ora</label>
           <input type="time" id="time" class="form-control" [(ngModel)]="bookingRequest.time" name="time" required>
+          <div *ngIf="contactForm.controls['time']?.touched && contactForm.controls['time']?.invalid" class="text-danger">
+            L'ora è obbligatoria.
+          </div>
         </div>
         <div class="mb-3">
           <label for="eventDetail" class="form-label">Dettaglio Evento</label>
-          <textarea class="form-control" id="eventDetail" name="eventDetails" rows="3" [(ngModel)]="bookingRequest.eventDetails" required></textarea>
+          <textarea class="form-control" id="eventDetail" name="eventDetails" rows="3" [(ngModel)]="bookingRequest.eventDetails" required maxlength="300"></textarea>
+          <div *ngIf="contactForm.controls['eventDetails']?.touched && contactForm.controls['eventDetails']?.invalid" class="text-danger">
+            <div *ngIf="contactForm.controls['eventDetails']?.errors?.['required']">Il dettaglio dell'evento è obbligatorio.</div>
+            <div *ngIf="contactForm.controls['eventDetails']?.errors?.['maxlength']">Il dettaglio dell'evento non può superare i 300 caratteri.</div>
+          </div>
         </div>
         <div class="mb-3">
           <label for="city" class="form-label">Città</label>
           <input type="text" class="form-control" id="city" name="city" [(ngModel)]="bookingRequest.city" required>
+          <div *ngIf="contactForm.controls['city']?.touched && contactForm.controls['city']?.invalid" class="text-danger">
+            La città è obbligatoria.
+          </div>
         </div>
       </form>
     </div>

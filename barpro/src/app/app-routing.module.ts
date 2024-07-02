@@ -10,6 +10,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   { path: 'our-barmen', loadChildren: () => import('./pages/our-barmen/our-barmen.module').then(m => m.OurBarmenModule) },
   { path: 'find-barman', loadChildren: () => import('./pages/find-barman/find-barman.module').then(m => m.FindBarmanModule) },
+  { path: 'my-bookings', loadChildren: () => import('./pages/my-bookings/my-bookings.module').then(m => m.MyBookingsModule) },
 ];
 
 @NgModule({

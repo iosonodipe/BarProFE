@@ -10,7 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-barman',
   templateUrl: './barman.component.html',
-  styleUrl: './barman.component.scss'
+  styleUrls: ['./barman.component.scss']
 })
 export class BarmanComponent {
   isUserLoggedIn: boolean = false;
@@ -23,13 +23,11 @@ export class BarmanComponent {
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.authSvc.isLoggedIn$.subscribe(data => {
       this.isUserLoggedIn = data;
-    })
+    });
   }
-
-
 
   barman: IBarman = {
     experienceYears: 0,
@@ -45,7 +43,7 @@ export class BarmanComponent {
     avatar: ''
   }
 
-  bookingRequest: IBookingRequest ={
+  bookingRequest: IBookingRequest = {
     idUser: 0,
     idBarman: 0,
     date: '',
@@ -67,8 +65,14 @@ export class BarmanComponent {
       this.setUserFromLocalStorage();
       this.bookingRequest.date = this.formatLocalDateTime(this.bookingRequest.date, this.bookingRequest.time); // Formatta la data e l'orario per il server
       console.log('Form Data: ', this.bookingRequest);
-      this.bookingSvc.createBooking(this.bookingRequest).subscribe()
-      modal.dismiss(this.bookingRequest);
+      this.bookingSvc.createBooking(this.bookingRequest).subscribe(
+        () => {
+          modal.dismiss(this.bookingRequest);
+        },
+        error => {
+          console.error('Error creating booking: ', error);
+        }
+      );
     }
   }
 
@@ -88,5 +92,4 @@ export class BarmanComponent {
   private formatLocalDateTime(date: string, time: string): string {
     return `${date}T${time}:00`;
   }
-
 }
