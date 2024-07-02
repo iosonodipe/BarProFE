@@ -6,6 +6,7 @@ import { IBarman } from '../../models/i-barman';
 import { ActivatedRoute } from '@angular/router';
 import { IBookingRequest } from '../../models/i-booking-request';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-barman',
@@ -61,19 +62,32 @@ export class BarmanComponent {
   }
 
   submit(form: any, modal: any) {
-    if (form.valid) {
-      this.setUserFromLocalStorage();
-      this.bookingRequest.date = this.formatLocalDateTime(this.bookingRequest.date, this.bookingRequest.time); // Formatta la data e l'orario per il server
-      console.log('Form Data: ', this.bookingRequest);
-      this.bookingSvc.createBooking(this.bookingRequest).subscribe(
-        () => {
-          modal.dismiss(this.bookingRequest);
-        },
-        error => {
-          console.error('Error creating booking: ', error);
+    Swal.fire({
+      title: "Confermi la richiesta?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Invia",
+      denyButtonText: `Annulla`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        if (form.valid) {
+          this.setUserFromLocalStorage();
+          this.bookingRequest.date = this.formatLocalDateTime(this.bookingRequest.date, this.bookingRequest.time); // Formatta la data e l'orario per il server
+          console.log('Form Data: ', this.bookingRequest);
+          this.bookingSvc.createBooking(this.bookingRequest).subscribe(
+            () => {
+              Swal.fire("Richiesta inviata!", "", "success");
+              modal.dismiss(this.bookingRequest);
+            },
+            error => {
+              console.error('Error creating booking: ', error);
+            }
+          );
         }
-      );
-    }
+      } else if (result.isDenied) {
+      }
+    });
   }
 
   setUserFromLocalStorage() {

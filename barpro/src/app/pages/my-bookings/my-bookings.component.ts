@@ -8,12 +8,12 @@ import { IQuotation } from '../../models/i-quotation';
 import { AuthService } from '../../auth/auth.service';
 import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { IQuotationRequest } from '../../models/i-quotation-request';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-my-bookings',
   templateUrl: './my-bookings.component.html',
-  styleUrls: ['./my-bookings.component.scss']
+  styleUrls: ['./my-bookings.component.scss'],
 })
 export class MyBookingsComponent implements OnInit {
   bookings: IBooking[] = [];
@@ -36,19 +36,19 @@ export class MyBookingsComponent implements OnInit {
       date: ['', Validators.required],
       time: ['', Validators.required],
       eventDetails: ['', [Validators.required, Validators.maxLength(300)]],
-      city: ['', Validators.required]
+      city: ['', Validators.required],
     });
 
     this.quotationForm = this.fb.group({
       requestDate: ['', Validators.required],
       requestTime: ['', Validators.required],
       eventDetails: ['', [Validators.required, Validators.maxLength(300)]],
-      city: ['', Validators.required]
+      city: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
       if (isLoggedIn) {
         this.userId = this.getUserIdFromLocalStorage();
         this.loadBookings();
@@ -58,35 +58,69 @@ export class MyBookingsComponent implements OnInit {
   }
 
   loadBookings(): void {
-    this.bookingService.getAllUserBookings(this.userId, 0, 100, 'date').subscribe(data => {
-      this.bookings = data.content;
-    });
+    this.bookingService
+      .getAllUserBookings(this.userId, 0, 100, 'date')
+      .subscribe((data) => {
+        this.bookings = data.content;
+      });
   }
 
   loadQuotations(): void {
-    this.quotationService.getAllByUser(0, 100, 'requestDate', this.userId).subscribe(data => {
-      this.quotations = data.content;
-    });
+    this.quotationService
+      .getAllByUser(0, 100, 'requestDate', this.userId)
+      .subscribe((data) => {
+        this.quotations = data.content;
+      });
   }
 
   private getUserIdFromLocalStorage(): number {
     const accessData = localStorage.getItem('accessData');
     if (accessData) {
       const parsedData = JSON.parse(accessData);
-      return parsedData.userResponse?.user?.id || parsedData.barmanResponse?.user?.id || 0;
+      return (
+        parsedData.userResponse?.user?.id ||
+        parsedData.barmanResponse?.user?.id ||
+        0
+      );
     }
     return 0;
   }
 
   deleteQuotation(id: number): void {
-    this.quotationService.deleteQuotation(id).subscribe(() => {
-      this.loadQuotations();
+    Swal.fire({
+      title: 'Sei sicuro di eliminare?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Elimina',
+      denyButtonText: `Annulla`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.quotationService.deleteQuotation(id).subscribe(() => {
+          Swal.fire('Eliminato!', '', 'success');
+          this.loadQuotations();
+        });
+      } else if (result.isDenied) {
+      }
     });
   }
 
   deleteBooking(id: number): void {
-    this.bookingService.deleteBooking(id).subscribe(() => {
-      this.loadBookings();
+    Swal.fire({
+      title: 'Sei sicuro di eliminare?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Elimina',
+      denyButtonText: `Annulla`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.bookingService.deleteBooking(id).subscribe(() => {
+          Swal.fire('Eliminato!', '', 'success');
+          this.loadBookings();
+        });
+      } else if (result.isDenied) {
+      }
     });
   }
 
@@ -100,15 +134,18 @@ export class MyBookingsComponent implements OnInit {
       date: booking.date.split('T')[0],
       time: booking.date.split('T')[1].slice(0, 5),
       eventDetails: booking.eventDetails,
-      city: booking.city
+      city: booking.city,
     });
-    this.modalService.open(content).result.then((result) => {
-      if (result === 'save' && this.currentBooking) {
-        this.saveBooking();
+    this.modalService.open(content).result.then(
+      (result) => {
+        if (result === 'save' && this.currentBooking) {
+          this.saveBooking();
+        }
+      },
+      () => {
+        this.currentBooking = null;
       }
-    }, () => {
-      this.currentBooking = null;
-    });
+    );
   }
 
   openQuotationModal(content: any, quotation: IQuotation): void {
@@ -117,54 +154,88 @@ export class MyBookingsComponent implements OnInit {
       requestDate: quotation.requestDate.split('T')[0],
       requestTime: quotation.requestDate.split('T')[1].slice(0, 5),
       eventDetails: quotation.eventDetails,
-      city: quotation.city
+      city: quotation.city,
     });
-    this.modalService.open(content).result.then((result) => {
-      if (result === 'save' && this.currentQuotation) {
-        this.saveQuotation();
+    this.modalService.open(content).result.then(
+      (result) => {
+        if (result === 'save' && this.currentQuotation) {
+          this.saveQuotation();
+        }
+      },
+      () => {
+        this.currentQuotation = null;
       }
-    }, () => {
-      this.currentQuotation = null;
-    });
+    );
   }
 
   saveBooking(): void {
-    if (this.currentBooking) {
-      const updatedBooking = {
-        idUser: this.currentBooking.user.id, // Assicurati che questo campo sia corretto
-        idBarman: this.currentBooking.barman.id, // Assicurati che questo campo sia corretto
-        date: `${this.bookingForm.value.date}T${this.bookingForm.value.time}:00`,
-        time: this.bookingForm.value.time, // Aggiungi questo campo
-        eventDetails: this.bookingForm.value.eventDetails,
-        city: this.bookingForm.value.city
-      };
+    Swal.fire({
+      title: 'Vuoi salvare le modifiche?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Salva',
+      denyButtonText: `Annulla`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        if (this.currentBooking) {
+          const updatedBooking = {
+            idUser: this.currentBooking.user.id, // Assicurati che questo campo sia corretto
+            idBarman: this.currentBooking.barman.id, // Assicurati che questo campo sia corretto
+            date: `${this.bookingForm.value.date}T${this.bookingForm.value.time}:00`,
+            time: this.bookingForm.value.time, // Aggiungi questo campo
+            eventDetails: this.bookingForm.value.eventDetails,
+            city: this.bookingForm.value.city,
+          };
 
-      this.bookingService.updateBooking(this.currentBooking.id, updatedBooking).subscribe(() => {
-        this.loadBookings();
-        this.modalService.dismissAll();
-      });
-    }
+          this.bookingService
+            .updateBooking(this.currentBooking.id, updatedBooking)
+            .subscribe(() => {
+              Swal.fire('Salvato!', '', 'success');
+              this.loadBookings();
+              this.modalService.dismissAll();
+            });
+        }
+      } else if (result.isDenied) {
+      }
+    });
   }
 
   saveQuotation(): void {
-    if (this.currentQuotation) {
-      const updatedQuotation: IQuotationRequest = {
-        idUser: this.userId,
-        requestDate: `${this.quotationForm.value.requestDate}T${this.quotationForm.value.requestTime}:00`,
-        requestTime: this.quotationForm.value.requestTime,
-        eventDetails: this.quotationForm.value.eventDetails,
-        city: this.quotationForm.value.city,
-        status: this.currentQuotation.status
-      };
+    Swal.fire({
+      title: 'Vuoi salvare le modifiche?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Salva',
+      denyButtonText: `Annulla`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        if (this.currentQuotation) {
+          const updatedQuotation: IQuotationRequest = {
+            idUser: this.userId,
+            requestDate: `${this.quotationForm.value.requestDate}T${this.quotationForm.value.requestTime}:00`,
+            requestTime: this.quotationForm.value.requestTime,
+            eventDetails: this.quotationForm.value.eventDetails,
+            city: this.quotationForm.value.city,
+            status: this.currentQuotation.status,
+          };
 
-      this.quotationService.updateQuotation(this.currentQuotation.id, updatedQuotation).subscribe(() => {
-        this.loadQuotations();
-        this.modalService.dismissAll();
-      }, error => {
-        console.error('Error updating quotation:', error);
-      });
-    } else {
-      console.error('currentQuotation is null or undefined');
-    }
+          this.quotationService
+            .updateQuotation(this.currentQuotation.id, updatedQuotation)
+            .subscribe(
+              () => {
+                Swal.fire('Salvato!', '', 'success');
+                this.loadQuotations();
+                this.modalService.dismissAll();
+              },
+              (error) => {
+                console.error('Error updating quotation:', error);
+              }
+            );
+        }
+      } else if (result.isDenied) {
+      }
+    });
   }
 }

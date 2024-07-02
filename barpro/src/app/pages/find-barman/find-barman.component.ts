@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { IQuotationRequest } from '../../models/i-quotation-request';
 import { QuotationService } from '../quotation/quotation.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-find-barman',
@@ -35,6 +36,13 @@ export class FindBarmanComponent {
 
     this.quotationService.createQuotation(this.quotationRequest).subscribe(
       response => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Richiesta pubblicata!",
+          showConfirmButton: false,
+          timer: 1500
+        });
         console.log('Request submitted successfully', response);
       },
       error => {

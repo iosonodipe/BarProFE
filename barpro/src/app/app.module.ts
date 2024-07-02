@@ -9,6 +9,7 @@ import { FooterComponent } from './main-components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BarmanModule } from './pages/barman/barman.module';
 import { HomeComponent } from './pages/home/home.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HomeComponent } from './pages/home/home.component';
     NgbModule,
     NgbCollapseModule,
     HttpClientModule,
-    BarmanModule
+    BarmanModule,
+    SweetAlert2Module.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
