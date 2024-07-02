@@ -15,6 +15,8 @@
               <div ngbAccordionBody>
                 <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
                 <p>Dettagli: {{booking.eventDetails}}</p>
+                <button type="button" class="btn btn-primary" (click)="openBookingModal(contentBooking, booking)">Modifica</button>
+                <button type="button" class="btn btn-danger" (click)="deleteBooking(booking.id)">Elimina</button>
               </div>
             </div>
           </div>
@@ -35,6 +37,7 @@
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <p>Dettagli: {{quotation.eventDetails}}</p>
+                <button type="button" class="btn btn-primary" (click)="openQuotationModal(contentQuotation, quotation)">Modifica</button>
                 <button type="button" class="btn btn-danger" (click)="deleteQuotation(quotation.id)">Elimina</button>
               </div>
             </div>
@@ -44,4 +47,92 @@
     </li>
   </ul>
   <div [ngbNavOutlet]="nav"></div>
+
+  <ng-template #contentBooking let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Modifica Prenotazione</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="bookingForm">
+        <div class="mb-3">
+          <label for="date" class="form-label">Data</label>
+          <input type="date" class="form-control" id="date" formControlName="date" required>
+          <div *ngIf="bookingForm.controls['date'].touched && bookingForm.controls['date'].invalid" class="text-danger">
+            La data è obbligatoria.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="time" class="form-label">Ora</label>
+          <input type="time" id="time" class="form-control" formControlName="time" required>
+          <div *ngIf="bookingForm.controls['time'].touched && bookingForm.controls['time'].invalid" class="text-danger">
+            L'ora è obbligatoria.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="eventDetail" class="form-label">Dettaglio Evento</label>
+          <textarea class="form-control" id="eventDetail" formControlName="eventDetails" rows="3" required maxlength="300"></textarea>
+          <div *ngIf="bookingForm.controls['eventDetails'].touched && bookingForm.controls['eventDetails'].invalid" class="text-danger">
+            <div *ngIf="bookingForm.controls['eventDetails'].errors?.['required']">Il dettaglio dell'evento è obbligatorio.</div>
+            <div *ngIf="bookingForm.controls['eventDetails'].errors?.['maxlength']">Il dettaglio dell'evento non può superare i 300 caratteri.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="city" class="form-label">Città</label>
+          <input type="text" class="form-control" id="city" formControlName="city" required>
+          <div *ngIf="bookingForm.controls['city'].touched && bookingForm.controls['city'].invalid" class="text-danger">
+            La città è obbligatoria.
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annulla</button>
+      <button type="button" class="btn btn-primary" [disabled]="!bookingForm.valid" (click)="saveBooking()">Salva</button>
+    </div>
+  </ng-template>
+
+  <ng-template #contentQuotation let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Modifica Richiesta di Quotazione</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="quotationForm">
+        <div class="mb-3">
+          <label for="requestDate" class="form-label">Data</label>
+          <input type="date" class="form-control" id="requestDate" name="requestDate" formControlName="requestDate" required>
+          <div *ngIf="quotationForm.controls['requestDate']?.touched && quotationForm.controls['requestDate']?.invalid" class="text-danger">
+            La data è obbligatoria.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="requestTime" class="form-label">Ora</label>
+          <input type="time" id="requestTime" class="form-control" formControlName="requestTime" name="requestTime" required>
+          <div *ngIf="quotationForm.controls['requestTime']?.touched && quotationForm.controls['requestTime']?.invalid" class="text-danger">
+            L'ora è obbligatoria.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="eventDetail" class="form-label">Dettaglio Evento</label>
+          <textarea class="form-control" id="eventDetail" name="eventDetails" rows="3" formControlName="eventDetails" required maxlength="300"></textarea>
+          <div *ngIf="quotationForm.controls['eventDetails']?.touched && quotationForm.controls['eventDetails']?.invalid" class="text-danger">
+            <div *ngIf="quotationForm.controls['eventDetails']?.errors?.['required']">Il dettaglio dell'evento è obbligatorio.</div>
+            <div *ngIf="quotationForm.controls['eventDetails']?.errors?.['maxlength']">Il dettaglio dell'evento non può superare i 300 caratteri.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="city" class="form-label">Città</label>
+          <input type="text" class="form-control" id="city" name="city" formControlName="city" required>
+          <div *ngIf="quotationForm.controls['city']?.touched && quotationForm.controls['city']?.invalid" class="text-danger">
+            La città è obbligatoria.
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annulla</button>
+      <button type="button" class="btn btn-primary" [disabled]="!quotationForm.valid" (click)="saveQuotation()">Salva</button>
+    </div>
+  </ng-template>
 </div>

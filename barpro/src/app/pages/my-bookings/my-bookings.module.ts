@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MyBookingsRoutingModule } from './my-bookings-routing.module';
 import { MyBookingsComponent } from './my-bookings.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     MyBookingsRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class MyBookingsModule { }
