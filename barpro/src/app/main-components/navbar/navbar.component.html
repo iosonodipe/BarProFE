@@ -10,13 +10,13 @@
           <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/our-barmen">I nostri barman</a>
+          <a class="nav-link" routerLink="/our-barmen" *ngIf="isUser">I nostri barman</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/find-barman">Trova il tuo barman</a>
+          <a class="nav-link" routerLink="/find-barman" *ngIf="isUser">Trova il tuo barman</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/my-bookings">Le mie prenotazioni</a>
+          <a class="nav-link" routerLink="/my-bookings" *ngIf="isUser">Le mie prenotazioni</a>
         </li>
 
       </ul>

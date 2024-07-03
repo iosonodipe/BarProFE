@@ -22,11 +22,17 @@ export class AuthService {
   jwtHelper: JwtHelperService = new JwtHelperService(); //ci permette di lavorare facilmente con i jwt
 
   authSubject = new BehaviorSubject<IUser | IBarman | null>(null); // può essere null, utente o barman
-
+  isUserSubject = new BehaviorSubject<boolean>(false);
+  isBarmanSubject = new BehaviorSubject<boolean>(false);
   user$ = this.authSubject.asObservable(); // contiene i dati dell'utente loggato oppure null
+  isUser$ = this.isUserSubject.asObservable()
+  isBarman$ = this.isBarmanSubject.asObservable();
   isLoggedIn$ = this.user$.pipe(
     map(user => !!user),
-    tap(user => this.syncIsLoggedIn = user)
+    tap(user => {
+
+      return this.syncIsLoggedIn = user
+    })
   ); // restituisce true se l'utente è loggato, false se non lo è
 
   syncIsLoggedIn: boolean = false;
@@ -60,21 +66,27 @@ export class AuthService {
         if (data.userResponse) {
           token = data.userResponse.token;
           user = data.userResponse.user;
+          this.isUserSubject.next(true);
         } else if (data.barmanResponse) {
           token = data.barmanResponse.token;
-          user = data.barmanResponse.user;
+          user = data.barmanResponse.barman;
+          this.isBarmanSubject.next(true);
         }
 
         if (token && user) {
+
           this.authSubject.next(user); //comunico al subject che l'utente si è loggato
           localStorage.setItem('accessData', JSON.stringify(data));
           this.autoLogout(token); // riavvia il timer per la scadenza della sessione
+
         }
       }));
   }
 
   logout() {
     this.authSubject.next(null); //comunico al subject che l'utente si è sloggato
+    this.isBarmanSubject.next(false);
+    this.isUserSubject.next(false);
     localStorage.removeItem('accessData'); //cancello i dati dell'utente
     this.router.navigate(['/auth/login']); //mando via l'utente loggato
   }
@@ -129,12 +141,14 @@ export class AuthService {
     if (accessData.userResponse) {
       token = accessData.userResponse.token;
       user = accessData.userResponse.user;
+      this.isUserSubject.next(true);
     }
 
     // Controlla se il token e l'utente sono presenti in barmanResponse
     if (accessData.barmanResponse) {
       token = accessData.barmanResponse.token;
-      user = accessData.barmanResponse.user;
+      user = accessData.barmanResponse.barman;
+      this.isBarmanSubject.next(true);
     }
 
     // Se non esiste un token valido, ferma la funzione
@@ -158,5 +172,25 @@ export class AuthService {
       default:
         return new Error('Errore');
     }
+  }
+
+  isUser(): boolean {
+    const accessData = JSON.parse(localStorage.getItem('accessData') || '{}');
+
+    if (accessData.userResponse && accessData.userResponse.user && Array.isArray(accessData.userResponse.user.roles)) {
+      return accessData.userResponse.user.roles.some((role: any) => role.roleType === 'USER');
+    }
+
+    return false;
+  }
+
+  isBarman(): boolean {
+    const accessData = JSON.parse(localStorage.getItem('accessData') || '{}');
+
+    if (accessData.barmanResponse && accessData.barmanResponse.user && Array.isArray(accessData.barmanResponse.user.roles)) {
+      return accessData.barmanResponse.barman.roles.some((role: any) => role.roleType === 'BARMAN');
+    }
+
+    return false;
   }
 }

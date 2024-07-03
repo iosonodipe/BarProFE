@@ -4,4 +4,5 @@ import { IUser } from "./i-user";
 export interface IUserResponse {
   token: string;
   user: IUser | IBarman;
+  barman: IUser | IBarman;
 }
