@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { GuestGuard } from './auth/guest.guard';
 import { UserGuard } from './auth/user.guard';
+import { BarmanGuard } from './auth/barman.guard';
 
 const routes: Routes = [
   {
@@ -32,8 +33,8 @@ const routes: Routes = [
       import('./pages/quotation/quotation.module').then(
         (m) => m.QuotationModule
       ),
-    canActivate: [UserGuard],
-    canActivateChild: [UserGuard],
+    canActivate: [BarmanGuard],
+    canActivateChild: [BarmanGuard],
   },
   { path: '', component: HomeComponent },
   {
@@ -59,6 +60,7 @@ const routes: Routes = [
     canActivate: [UserGuard],
     canActivateChild: [UserGuard],
   },
+  { path: 'my-events', loadChildren: () => import('./pages/my-events/my-events.module').then(m => m.MyEventsModule) },
 ];
 
 @NgModule({

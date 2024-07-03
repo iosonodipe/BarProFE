@@ -1,0 +1,22 @@
+<div class="container mt-5">
+  <h2>I tuoi eventi</h2>
+  <div ngbAccordion *ngIf="bookings.length > 0">
+    <div *ngFor="let booking of bookings" ngbAccordionItem>
+      <h2 ngbAccordionHeader>
+        <button ngbAccordionButton>{{booking.city}} - {{booking.date}} - Stato: {{booking.status}}</button>
+      </h2>
+      <div ngbAccordionCollapse>
+        <div ngbAccordionBody>
+          <p>Utente: {{booking.user.firstName}} {{booking.user.lastName}}</p>
+          <p>Dettagli: {{booking.eventDetails}}</p>
+          {{booking.status === 'CONFIRMED'}}
+          <button type="button" class="btn btn-danger" *ngIf="booking.status === 'CONFIRMED'" (click)="confirmDeleteBooking(booking.id)">Elimina</button>
+          <button type="button" class="btn btn-primary" *ngIf="booking.status === 'PENDING'" (click)="confirmBooking(booking.id)">Conferma</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="bookings.length == 0" class="alert alert-light" role="alert">
+    Nessuna prenotazione trovata.
+  </div>
+</div>

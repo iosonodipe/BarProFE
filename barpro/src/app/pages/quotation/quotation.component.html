@@ -1,1 +1,43 @@
-<p>quotation works!</p>
+<div class="container mt-5">
+  <h2>Richieste di quotazione</h2>
+  <div ngbAccordion *ngIf="quotations.length > 0">
+    <div *ngFor="let quotation of quotations" ngbAccordionItem>
+      <h2 ngbAccordionHeader>
+        <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}} - Stato: {{quotation.status}}</button>
+      </h2>
+      <div ngbAccordionCollapse>
+        <div ngbAccordionBody>
+          <p>Cliente: {{quotation.nameUser}} {{quotation.surnameUser}}</p>
+          <p>Dettagli: {{quotation.eventDetails}}</p>
+          <button type="button" class="btn btn-primary" (click)="openQuotationModal(content, quotation)">Invia proposta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="quotations.length == 0" class="alert alert-light" role="alert">
+    Nessuna quotazione trovata.
+  </div>
+
+  <!-- Modale per inviare la proposta -->
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Invia Proposta</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="quotationForm">
+        <div class="mb-3">
+          <label for="priceDetails" class="form-label">Prezzo</label>
+          <input type="number" id="priceDetails" class="form-control" formControlName="priceDetails">
+          <div *ngIf="quotationForm.get('priceDetails')?.invalid && (quotationForm.get('priceDetails')?.dirty || quotationForm.get('priceDetails')?.touched)" class="text-danger">
+            Il prezzo è obbligatorio
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Chiudi</button>
+      <button type="button" class="btn btn-primary" (click)="confirmQuotation(modal)" [disabled]="quotationForm.invalid">Conferma</button>
+    </div>
+  </ng-template>
+</div>

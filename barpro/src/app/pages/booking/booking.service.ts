@@ -41,10 +41,10 @@ export class BookingService {
   }
 
   confirmBooking(id: number): Observable<string> {
-    return this.http.patch<string>(`${this.apiUrl}/${id}/confirm`, { responseType: 'text' as 'json' })
-    .pipe(
-      tap(() => this.refreshBookings())
-    );
+    return this.http.patch(`${this.apiUrl}/${id}/confirm`, {}, { responseType: 'text' })
+      .pipe(
+        tap(() => this.refreshBookings())
+      );
   }
 
   updateBooking(id: number, booking: IBookingRequest): Observable<IBooking> {

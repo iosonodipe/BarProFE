@@ -2,7 +2,8 @@ import { IUser } from "./i-user";
 
 export interface IQuotation {
   id: number;
-  user: IUser;
+  nameUser: string;
+  surnameUser: string;
   eventDetails: string;
   city: string;
   requestDate: string;

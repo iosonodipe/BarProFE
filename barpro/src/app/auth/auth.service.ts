@@ -187,7 +187,8 @@ export class AuthService {
   isBarman(): boolean {
     const accessData = JSON.parse(localStorage.getItem('accessData') || '{}');
 
-    if (accessData.barmanResponse && accessData.barmanResponse.user && Array.isArray(accessData.barmanResponse.user.roles)) {
+    if (accessData.barmanResponse && accessData.barmanResponse.barman && Array.isArray(accessData.barmanResponse.barman.roles)) {
+
       return accessData.barmanResponse.barman.roles.some((role: any) => role.roleType === 'BARMAN');
     }
 
