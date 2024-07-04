@@ -3,7 +3,7 @@
   <div ngbAccordion *ngIf="quotations.length > 0">
     <div *ngFor="let quotation of quotations" ngbAccordionItem>
       <h2 ngbAccordionHeader>
-        <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}} - Stato: {{quotation.status}}</button>
+        <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}}</button>
       </h2>
       <div ngbAccordionCollapse>
         <div ngbAccordionBody>

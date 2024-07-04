@@ -5,7 +5,7 @@
     <div ngbAccordion>
       <div *ngFor="let booking of pendingBookings" ngbAccordionItem>
         <h2 ngbAccordionHeader>
-          <button ngbAccordionButton>{{booking.city}} - {{booking.date}} - Stato: {{booking.status}}</button>
+          <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
         </h2>
         <div ngbAccordionCollapse>
           <div ngbAccordionBody>
@@ -26,7 +26,7 @@
     <div ngbAccordion>
       <div *ngFor="let booking of confirmedBookings" ngbAccordionItem>
         <h2 ngbAccordionHeader>
-          <button ngbAccordionButton>{{booking.city}} - {{booking.date}} - Stato: {{booking.status}}</button>
+          <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
         </h2>
         <div ngbAccordionCollapse>
           <div ngbAccordionBody>

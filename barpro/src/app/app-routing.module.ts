@@ -60,7 +60,27 @@ const routes: Routes = [
     canActivate: [UserGuard],
     canActivateChild: [UserGuard],
   },
-  { path: 'my-events', loadChildren: () => import('./pages/my-events/my-events.module').then(m => m.MyEventsModule) },
+  {
+    path: 'my-events',
+    loadChildren: () =>
+      import('./pages/my-events/my-events.module').then(
+        (m) => m.MyEventsModule
+      ),
+  },
+  {
+    path: 'accept-quotation/:id/:idBarman',
+    loadChildren: () =>
+      import('./pages/accept-quotation/accept-quotation.module').then(
+        (m) => m.AcceptQuotationModule
+      ),
+  },
+  {
+    path: 'confirm-booking/:id',
+    loadChildren: () =>
+      import('./pages/confirm-booking/confirm-booking.module').then(
+        (m) => m.ConfirmBookingModule
+      ),
+  },
 ];
 
 @NgModule({
