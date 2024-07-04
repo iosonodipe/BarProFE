@@ -17,7 +17,11 @@ import Swal from 'sweetalert2';
 })
 export class MyBookingsComponent implements OnInit {
   bookings: IBooking[] = [];
+  pendingBookings: IBooking[] = [];
+  confirmedBookings: IBooking[] = [];
   quotations: IQuotation[] = [];
+  openQuotations: IQuotation[] = [];
+  closedQuotations: IQuotation[] = [];
   activeTab: number = 1;
   userId: number = 0;
   bookingForm: FormGroup;
@@ -62,7 +66,13 @@ export class MyBookingsComponent implements OnInit {
       .getAllUserBookings(this.userId, 0, 100, 'date')
       .subscribe((data) => {
         this.bookings = data.content;
+        this.filterBookings();
       });
+  }
+
+  filterBookings(): void {
+    this.pendingBookings = this.bookings.filter(booking => booking.status === 'PENDING');
+    this.confirmedBookings = this.bookings.filter(booking => booking.status === 'CONFIRMED');
   }
 
   loadQuotations(): void {
@@ -70,7 +80,13 @@ export class MyBookingsComponent implements OnInit {
       .getAllByUser(0, 100, 'requestDate', this.userId)
       .subscribe((data) => {
         this.quotations = data.content;
+        this.filterQuotations();
       });
+  }
+
+  filterQuotations(): void {
+    this.openQuotations = this.quotations.filter(quotation => quotation.status === 'OPEN');
+    this.closedQuotations = this.quotations.filter(quotation => quotation.status === 'CLOSED');
   }
 
   private getUserIdFromLocalStorage(): number {
@@ -91,10 +107,10 @@ export class MyBookingsComponent implements OnInit {
       title: 'Sei sicuro di eliminare?',
       showDenyButton: true,
       showCancelButton: false,
+      icon: 'warning',
       confirmButtonText: 'Elimina',
       denyButtonText: `Annulla`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.quotationService.deleteQuotation(id).subscribe(() => {
           Swal.fire('Eliminato!', '', 'success');
@@ -113,7 +129,6 @@ export class MyBookingsComponent implements OnInit {
       confirmButtonText: 'Elimina',
       denyButtonText: `Annulla`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.bookingService.deleteBooking(id).subscribe(() => {
           Swal.fire('Eliminato!', '', 'success');
@@ -172,18 +187,18 @@ export class MyBookingsComponent implements OnInit {
     Swal.fire({
       title: 'Vuoi salvare le modifiche?',
       showDenyButton: true,
+      icon: 'question',
       showCancelButton: false,
       confirmButtonText: 'Salva',
       denyButtonText: `Annulla`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         if (this.currentBooking) {
           const updatedBooking = {
-            idUser: this.currentBooking.user.id, // Assicurati che questo campo sia corretto
-            idBarman: this.currentBooking.barman.id, // Assicurati che questo campo sia corretto
+            idUser: this.currentBooking.user.id,
+            idBarman: this.currentBooking.barman.id,
             date: `${this.bookingForm.value.date}T${this.bookingForm.value.time}:00`,
-            time: this.bookingForm.value.time, // Aggiungi questo campo
+            time: this.bookingForm.value.time,
             eventDetails: this.bookingForm.value.eventDetails,
             city: this.bookingForm.value.city,
           };
@@ -205,11 +220,11 @@ export class MyBookingsComponent implements OnInit {
     Swal.fire({
       title: 'Vuoi salvare le modifiche?',
       showDenyButton: true,
+      icon: 'question',
       showCancelButton: false,
       confirmButtonText: 'Salva',
       denyButtonText: `Annulla`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         if (this.currentQuotation) {
           const updatedQuotation: IQuotationRequest = {
@@ -238,4 +253,47 @@ export class MyBookingsComponent implements OnInit {
       }
     });
   }
+
+  confirmDeleteBooking(id: number): void {
+    Swal.fire({
+      title: 'Sei sicuro?',
+      text: "Il barman verrà avvisato via mail",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sì, elimina',
+      cancelButtonText: 'No, annulla'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteBooking(id);
+      }
+    });
+  }
+
+  // confirmBooking(id: number): void {
+  //   Swal.fire({
+  //     title: 'Confermare la prenotazione?',
+  //     icon: 'question',
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Sì, conferma',
+  //     cancelButtonText: 'No, annulla'
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       this.bookingService.confirmBooking(id).subscribe((response) => {
+  //         Swal.fire(
+  //           'Confermato!',
+  //           response, // Mostra la risposta come messaggio di successo
+  //           'success'
+  //         );
+  //         this.loadBookings();
+  //       }, (error) => {
+  //         Swal.fire(
+  //           'Errore!',
+  //           'Si è verificato un errore durante la conferma della prenotazione.',
+  //           'error'
+  //         );
+  //         console.error(error);
+  //       });
+  //     }
+  //   });
+  // }
 }

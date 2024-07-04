@@ -3,20 +3,48 @@
     <li ngbNavItem>
       <a ngbNavLink> Prenotazioni </a>
       <ng-template ngbNavContent>
-        <div *ngIf="bookings.length == 0" class="alert alert-light" role="alert">
+        <div *ngIf="pendingBookings.length === 0 && confirmedBookings.length === 0" class="alert alert-light" role="alert">
           Nessuna prenotazione effettuata.
         </div>
-        <div ngbAccordion *ngIf="bookings">
-          <div *ngFor="let booking of bookings" ngbAccordionItem>
-            <h2 ngbAccordionHeader>
-              <button ngbAccordionButton>{{booking.city}} - {{booking.date}} - Stato: {{booking.status}}</button>
-            </h2>
-            <div ngbAccordionCollapse>
-              <div ngbAccordionBody>
-                <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
-                <p>Dettagli: {{booking.eventDetails}}</p>
-                <button type="button" class="btn btn-primary" (click)="openBookingModal(contentBooking, booking)">Modifica</button>
-                <button type="button" class="btn btn-danger" (click)="deleteBooking(booking.id)">Elimina</button>
+
+        <div *ngIf="pendingBookings.length > 0">
+          <h3>In attesa</h3>
+          <div *ngIf="pendingBookings.length === 0" class="alert alert-light" role="alert">
+            Nessuna prenotazione in attesa di conferma.
+          </div>
+          <div ngbAccordion>
+            <div *ngFor="let booking of pendingBookings" ngbAccordionItem>
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
+                  <p>Dettagli: {{booking.eventDetails}}</p>
+                  <button type="button" class="btn btn-primary" (click)="openBookingModal(contentBooking, booking)">Modifica</button>
+                  <!-- <button type="button" class="btn btn-primary" (click)="confirmBooking(booking.id)">Conferma</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="confirmedBookings.length > 0" class="mt-4">
+          <h3>Confermate</h3>
+          <div *ngIf="confirmedBookings.length === 0" class="alert alert-light" role="alert">
+            Nessuna prenotazione confermata.
+          </div>
+          <div ngbAccordion>
+            <div *ngFor="let booking of confirmedBookings" ngbAccordionItem>
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
+                  <p>Dettagli: {{booking.eventDetails}}</p>
+                  <button type="button" class="btn btn-danger" (click)="confirmDeleteBooking(booking.id)">Elimina</button>
+                </div>
               </div>
             </div>
           </div>
@@ -26,21 +54,47 @@
     <li ngbNavItem>
       <a ngbNavLink> Richieste </a>
       <ng-template ngbNavContent>
-        <div *ngIf="quotations.length == 0" class="alert alert-light" role="alert">
+        <div *ngIf="openQuotations.length == 0 && closedQuotations.length == 0" class="alert alert-light" role="alert">
           Nessuna richiesta di quotazione effettuata.
         </div>
-        <div ngbAccordion *ngIf="quotations">
-          <div *ngFor="let quotation of quotations" ngbAccordionItem>
-            <h2 ngbAccordionHeader>
-              <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}} - Stato: {{quotation.status}}</button>
-            </h2>
-            <div ngbAccordionCollapse>
-              <div ngbAccordionBody>
-                <p>Dettagli: {{quotation.eventDetails}}</p>
-                <button type="button" class="btn btn-primary" (click)="openQuotationModal(contentQuotation, quotation)">Modifica</button>
-                <button type="button" class="btn btn-danger" (click)="deleteQuotation(quotation.id)">Elimina</button>
+
+        <div class="container">
+          <h3>Aperte</h3>
+          <div ngbAccordion *ngIf="openQuotations.length > 0">
+            <div *ngFor="let quotation of openQuotations" ngbAccordionItem>
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}}</button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <p>Dettagli: {{quotation.eventDetails}}</p>
+                  <button type="button" class="btn btn-primary" (click)="openQuotationModal(contentQuotation, quotation)">Modifica</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteQuotation(quotation.id)">Elimina</button>
+                </div>
               </div>
             </div>
+          </div>
+          <div *ngIf="openQuotations.length == 0" class="alert alert-light" role="alert">
+            Nessuna quotazione aperta trovata.
+          </div>
+        </div>
+
+        <div class="container mt-4">
+          <h3>Chiuse</h3>
+          <div ngbAccordion *ngIf="closedQuotations.length > 0">
+            <div *ngFor="let quotation of closedQuotations" ngbAccordionItem>
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}}</button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <p>Dettagli: {{quotation.eventDetails}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="closedQuotations.length == 0" class="alert alert-light" role="alert">
+            Nessuna quotazione chiusa trovata.
           </div>
         </div>
       </ng-template>

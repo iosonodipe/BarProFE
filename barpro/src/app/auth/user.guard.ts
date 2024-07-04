@@ -15,7 +15,7 @@ export class UserGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     if (!this.authSvc.isUser()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/auth/login']);
       return false;
     }
     return true;

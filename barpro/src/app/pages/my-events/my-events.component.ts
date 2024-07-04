@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 })
 export class MyEventsComponent implements OnInit {
   bookings: IBooking[] = [];
+  pendingBookings: IBooking[] = [];
+  confirmedBookings: IBooking[] = [];
 
   constructor(
     private bookingService: BookingService
@@ -23,8 +25,13 @@ export class MyEventsComponent implements OnInit {
     const barmanId = this.getBarmanIdFromLocalStorage();
     this.bookingService.getAllBarmanBookings(barmanId, 0, 100, 'date').subscribe(data => {
       this.bookings = data.content;
-
+      this.filterBookings();
     });
+  }
+
+  filterBookings(): void {
+    this.pendingBookings = this.bookings.filter(booking => booking.status === 'PENDING');
+    this.confirmedBookings = this.bookings.filter(booking => booking.status === 'CONFIRMED');
   }
 
   getBarmanIdFromLocalStorage(): number {
