@@ -8,12 +8,17 @@ import { QuotationService } from './quotation.service';
 @Component({
   selector: 'app-quotation',
   templateUrl: './quotation.component.html',
-  styleUrl: './quotation.component.scss'
+  styleUrls: ['./quotation.component.scss']
 })
 export class QuotationComponent implements OnInit {
   quotations: IQuotation[] = [];
   quotationForm: FormGroup;
   currentQuotation: IQuotation | null = null;
+
+  // Paginazione
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalQuotations: number = 0;
 
   constructor(
     private quotationService: QuotationService,
@@ -30,8 +35,9 @@ export class QuotationComponent implements OnInit {
   }
 
   loadQuotations(): void {
-    this.quotationService.getAll(0, 100, 'requestDate').subscribe(data => {
+    this.quotationService.getAll(this.currentPage - 1, this.pageSize, 'requestDate').subscribe(data => {
       this.quotations = data.content.filter(q => q.status === 'OPEN');
+      this.totalQuotations = data.totalElements; // Assuming the total elements are available in the response
     });
   }
 

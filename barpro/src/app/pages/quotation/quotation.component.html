@@ -18,6 +18,13 @@
     Nessuna quotazione trovata.
   </div>
 
+  <ngb-pagination
+    [collectionSize]="totalQuotations"
+    [(page)]="currentPage"
+    [pageSize]="pageSize"
+    (pageChange)="loadQuotations()"
+  ></ngb-pagination>
+
   <!-- Modale per inviare la proposta -->
   <ng-template #content let-modal>
     <div class="modal-header">
