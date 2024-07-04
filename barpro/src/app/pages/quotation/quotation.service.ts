@@ -54,7 +54,8 @@ export class QuotationService {
     return this.http.post<string>(`${this.apiUrl}/${id}/accept`, null, {
       params: {
         idBarman: idBarman.toString()
-      }
+      },
+      responseType: 'text' as 'json'
     }).pipe(
       tap(() => this.refreshQuotations())
     );

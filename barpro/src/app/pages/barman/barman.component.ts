@@ -65,6 +65,7 @@ export class BarmanComponent {
     Swal.fire({
       title: "Confermi la richiesta?",
       showDenyButton: true,
+      icon: "question",
       showCancelButton: false,
       confirmButtonText: "Invia",
       denyButtonText: `Annulla`
