@@ -36,8 +36,15 @@ export class QuotationComponent implements OnInit {
 
   loadQuotations(): void {
     this.quotationService.getAll(this.currentPage - 1, this.pageSize, 'requestDate').subscribe(data => {
-      this.quotations = data.content.filter(q => q.status === 'OPEN');
-      this.totalQuotations = data.totalElements; // Assuming the total elements are available in the response
+      const openQuotations = data.content.filter(q => q.status === 'OPEN');
+      if (openQuotations.length === 0 && this.currentPage > 1) {
+        this.currentPage--;
+        this.loadQuotations();
+      } else {
+        this.quotations = openQuotations;
+        this.totalQuotations = data.totalElements - (data.content.length - openQuotations.length);
+
+      }
     });
   }
 
@@ -50,7 +57,7 @@ export class QuotationComponent implements OnInit {
   confirmQuotation(modal: any): void {
     if (this.currentQuotation) {
       const priceDetails = this.quotationForm.get('priceDetails')?.value;
-      const barmanId = this.getBarmanIdFromLocalStorage(); // Assuming you have a method to get the barman ID
+      const barmanId = this.getBarmanIdFromLocalStorage();
       this.quotationService.respondToQuotation(this.currentQuotation.id, barmanId, priceDetails).subscribe(() => {
         Swal.fire('Proposta inviata', 'La tua proposta è stata inviata con successo!', 'success');
         this.loadQuotations();

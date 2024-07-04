@@ -63,14 +63,14 @@ export class BarmanService {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.put<string>(`${this.apiUrl}/${username}/avatar`, formData)
+    return this.http.put<string>(`${this.apiUrl}/${username}/avatar`, formData, { responseType: 'text' as 'json' })
     .pipe(
       tap(() => this.refreshBarmen())
     );
   }
 
   getUserAvatar(username: string): Observable<string> {
-    return this.http.get<string>(`${this.apiUrl}/${username}/avatar`);
+    return this.http.get<string>(`${this.apiUrl}/${username}/avatar`, { responseType: 'text' as 'json' });
   }
 
   private refreshBarmen() {

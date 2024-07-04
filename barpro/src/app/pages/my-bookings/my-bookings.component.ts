@@ -20,8 +20,6 @@ export class MyBookingsComponent implements OnInit {
   pendingBookings: IBooking[] = [];
   confirmedBookings: IBooking[] = [];
   quotations: IQuotation[] = [];
-  openQuotations: IQuotation[] = [];
-  closedQuotations: IQuotation[] = [];
   activeTab: number = 1;
   userId: number = 0;
   bookingForm: FormGroup;
@@ -80,13 +78,7 @@ export class MyBookingsComponent implements OnInit {
       .getAllByUser(0, 100, 'requestDate', this.userId)
       .subscribe((data) => {
         this.quotations = data.content;
-        this.filterQuotations();
       });
-  }
-
-  filterQuotations(): void {
-    this.openQuotations = this.quotations.filter(quotation => quotation.status === 'OPEN');
-    this.closedQuotations = this.quotations.filter(quotation => quotation.status === 'CLOSED');
   }
 
   private getUserIdFromLocalStorage(): number {

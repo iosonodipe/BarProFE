@@ -54,14 +54,13 @@
     <li ngbNavItem>
       <a ngbNavLink> Richieste </a>
       <ng-template ngbNavContent>
-        <div *ngIf="openQuotations.length == 0 && closedQuotations.length == 0" class="alert alert-light" role="alert">
+        <div *ngIf="quotations.length == 0" class="alert alert-light" role="alert">
           Nessuna richiesta di quotazione effettuata.
         </div>
 
         <div class="container">
-          <h3>Aperte</h3>
-          <div ngbAccordion *ngIf="openQuotations.length > 0">
-            <div *ngFor="let quotation of openQuotations" ngbAccordionItem>
+          <div ngbAccordion *ngIf="quotations.length > 0">
+            <div *ngFor="let quotation of quotations" ngbAccordionItem>
               <h2 ngbAccordionHeader>
                 <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}}</button>
               </h2>
@@ -73,28 +72,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div *ngIf="openQuotations.length == 0" class="alert alert-light" role="alert">
-            Nessuna quotazione aperta trovata.
-          </div>
-        </div>
-
-        <div class="container mt-4">
-          <h3>Chiuse</h3>
-          <div ngbAccordion *ngIf="closedQuotations.length > 0">
-            <div *ngFor="let quotation of closedQuotations" ngbAccordionItem>
-              <h2 ngbAccordionHeader>
-                <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}}</button>
-              </h2>
-              <div ngbAccordionCollapse>
-                <div ngbAccordionBody>
-                  <p>Dettagli: {{quotation.eventDetails}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="closedQuotations.length == 0" class="alert alert-light" role="alert">
-            Nessuna quotazione chiusa trovata.
           </div>
         </div>
       </ng-template>

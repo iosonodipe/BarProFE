@@ -13,11 +13,6 @@ const routes: Routes = [
     canActivateChild: [GuestGuard],
   },
   {
-    path: 'user',
-    loadChildren: () =>
-      import('./pages/user/user.module').then((m) => m.UserModule),
-  },
-  {
     path: 'barman',
     loadChildren: () =>
       import('./pages/barman/barman.module').then((m) => m.BarmanModule),
@@ -81,6 +76,8 @@ const routes: Routes = [
         (m) => m.ConfirmBookingModule
       ),
   },
+  { path: 'user-profile', loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule) },
+  { path: 'barman-profile', loadChildren: () => import('./pages/barman-profile/barman-profile.module').then(m => m.BarmanProfileModule) },
 ];
 
 @NgModule({
