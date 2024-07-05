@@ -1,1 +1,68 @@
-<p>user-profile works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <img [src]="avatarUrl" alt="Avatar" class="img-fluid rounded-circle mb-3" *ngIf="avatarUrl">
+      <img src="/assets/img/avatar.webp" alt="Avatar" class="img-fluid rounded-circle mb-3" *ngIf="!avatarUrl">
+      <div class="mb-3">
+        <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput>
+        <button class="btn btn-primary" (click)="fileInput.click()">Aggiorna</button>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h3>{{user?.firstName}} {{user?.lastName}}</h3>
+      <p><strong>Email:</strong> {{user?.email}}</p>
+      <p><strong>Città:</strong> {{user?.city}}</p>
+      <p><strong>Username:</strong> {{user?.username}}</p>
+      <button class="btn btn-primary mt-3" (click)="openEditModal(editContent)">Modifica dati utente</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modale per la modifica dei dati utente -->
+<ng-template #editContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modifica Dati Utente</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm">
+      <div class="mb-3">
+        <label for="firstName" class="form-label">Nome</label>
+        <input type="text" id="firstName" class="form-control" formControlName="firstName">
+        <div *ngIf="editForm.controls['firstName'].invalid && (editForm.controls['firstName'].dirty || editForm.controls['firstName'].touched)" class="text-danger">
+          Nome è obbligatorio
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Cognome</label>
+        <input type="text" id="lastName" class="form-control" formControlName="lastName">
+        <div *ngIf="editForm.controls['lastName'].invalid && (editForm.controls['lastName'].dirty || editForm.controls['lastName'].touched)" class="text-danger">
+          Cognome è obbligatorio
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" formControlName="email">
+        <div *ngIf="editForm.controls['email'].invalid && (editForm.controls['email'].dirty || editForm.controls['email'].touched)" class="text-danger">
+          Email è obbligatoria e deve essere valida
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="city" class="form-label">Città</label>
+        <input type="text" id="city" class="form-control" formControlName="city">
+        <div *ngIf="editForm.controls['city'].invalid && (editForm.controls['city'].dirty || editForm.controls['city'].touched)" class="text-danger">
+          Città è obbligatoria
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" formControlName="password">
+        <!-- Password is not required, so no validation message here -->
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annulla</button>
+    <button type="button" class="btn btn-primary" (click)="updateUser(modal)" [disabled]="editForm.invalid">Modifica</button>
+  </div>
+</ng-template>

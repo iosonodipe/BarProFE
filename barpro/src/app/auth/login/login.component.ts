@@ -23,7 +23,8 @@ export class LoginComponent {
 
       this.authSvc.login(this.loginData)
       .subscribe(data => {
-        this.router.navigate([''])
+        if(this.authSvc.isBarman()) this.router.navigate(['/my-events'])
+        else this.router.navigate([''])
       })
 
     }

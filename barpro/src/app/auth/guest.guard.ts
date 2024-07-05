@@ -16,8 +16,8 @@ export class GuestGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     if (this.authSvc.syncIsLoggedIn) {
-      this.router.navigate(['/user']);
-      return false;
+      if(this.authSvc.isBarman())
+      this.router.navigate(['/barman-profile']);
     }
     return true;
   }

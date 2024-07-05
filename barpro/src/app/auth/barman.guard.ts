@@ -21,7 +21,8 @@ export class BarmanGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): boolean {
     if (!this.authSvc.isBarman()) {
-      this.router.navigate(['/my-events']);
+
+      this.router.navigate(['/']);
       return false
     }
     return true;

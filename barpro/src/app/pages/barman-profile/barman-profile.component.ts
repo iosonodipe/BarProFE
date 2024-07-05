@@ -44,7 +44,7 @@ export class BarmanProfileComponent implements OnInit {
     if (username) {
       this.barmanService.getById(accessData.barmanResponse.barman.id).subscribe(data => {
         this.barman = data;
-        this.loadAvatar(username);
+        if (this.barman.avatar) this.loadAvatar(username);
       });
     }
   }
@@ -105,7 +105,7 @@ export class BarmanProfileComponent implements OnInit {
         updatedBarman.password = this.editForm.value.password;
       }
 
-      console.log(updatedBarman);
+
 
       this.barmanService.updateBarman(this.barman.id, updatedBarman).subscribe(() => {
         Swal.fire('Modificato!', 'I dati del barman sono stati aggiornati con successo.', 'success');

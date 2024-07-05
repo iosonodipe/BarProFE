@@ -16,11 +16,8 @@ const routes: Routes = [
     path: 'barman',
     loadChildren: () =>
       import('./pages/barman/barman.module').then((m) => m.BarmanModule),
-  },
-  {
-    path: 'booking',
-    loadChildren: () =>
-      import('./pages/booking/booking.module').then((m) => m.BookingModule),
+    canActivate: [UserGuard],
+    canActivateChild: [UserGuard],
   },
   {
     path: 'quotation',
@@ -31,13 +28,18 @@ const routes: Routes = [
     canActivate: [BarmanGuard],
     canActivateChild: [BarmanGuard],
   },
-  { path: '', component: HomeComponent },
+  {
+    path: '',
+    component: HomeComponent,
+  },
   {
     path: 'our-barmen',
     loadChildren: () =>
       import('./pages/our-barmen/our-barmen.module').then(
         (m) => m.OurBarmenModule
       ),
+      canActivate: [UserGuard],
+      canActivateChild: [UserGuard],
   },
   {
     path: 'find-barman',
@@ -45,6 +47,8 @@ const routes: Routes = [
       import('./pages/find-barman/find-barman.module').then(
         (m) => m.FindBarmanModule
       ),
+      canActivate: [UserGuard],
+      canActivateChild: [UserGuard],
   },
   {
     path: 'my-bookings',
@@ -61,6 +65,8 @@ const routes: Routes = [
       import('./pages/my-events/my-events.module').then(
         (m) => m.MyEventsModule
       ),
+      canActivate: [BarmanGuard],
+      canActivateChild: [BarmanGuard],
   },
   {
     path: 'accept-quotation/:id/:idBarman',
@@ -68,6 +74,8 @@ const routes: Routes = [
       import('./pages/accept-quotation/accept-quotation.module').then(
         (m) => m.AcceptQuotationModule
       ),
+      canActivate: [UserGuard],
+      canActivateChild: [UserGuard],
   },
   {
     path: 'confirm-booking/:id',
@@ -75,9 +83,27 @@ const routes: Routes = [
       import('./pages/confirm-booking/confirm-booking.module').then(
         (m) => m.ConfirmBookingModule
       ),
+      canActivate: [BarmanGuard],
+      canActivateChild: [BarmanGuard],
   },
-  { path: 'user-profile', loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule) },
-  { path: 'barman-profile', loadChildren: () => import('./pages/barman-profile/barman-profile.module').then(m => m.BarmanProfileModule) },
+  {
+    path: 'user-profile',
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        (m) => m.UserProfileModule
+      ),
+      canActivate: [UserGuard],
+      canActivateChild: [UserGuard],
+  },
+  {
+    path: 'barman-profile',
+    loadChildren: () =>
+      import('./pages/barman-profile/barman-profile.module').then(
+        (m) => m.BarmanProfileModule
+      ),
+      canActivate: [BarmanGuard],
+      canActivateChild: [BarmanGuard],
+  },
 ];
 
 @NgModule({
