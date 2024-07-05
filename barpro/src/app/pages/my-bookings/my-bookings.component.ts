@@ -113,24 +113,6 @@ export class MyBookingsComponent implements OnInit {
     });
   }
 
-  deleteBooking(id: number): void {
-    Swal.fire({
-      title: 'Sei sicuro di eliminare?',
-      showDenyButton: true,
-      showCancelButton: false,
-      confirmButtonText: 'Elimina',
-      denyButtonText: `Annulla`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.bookingService.deleteBooking(id).subscribe(() => {
-          Swal.fire('Eliminato!', '', 'success');
-          this.loadBookings();
-        });
-      } else if (result.isDenied) {
-      }
-    });
-  }
-
   onTabChange(event: NgbNavChangeEvent): void {
     this.activeTab = event.nextId;
   }
@@ -256,36 +238,13 @@ export class MyBookingsComponent implements OnInit {
       cancelButtonText: 'No, annulla'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.deleteBooking(id);
+        this.bookingService.deleteBooking(id).subscribe(() => {
+          this.loadBookings();
+          Swal.fire('Eliminato!', '', 'success');
+        });
       }
     });
   }
 
-  // confirmBooking(id: number): void {
-  //   Swal.fire({
-  //     title: 'Confermare la prenotazione?',
-  //     icon: 'question',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Sì, conferma',
-  //     cancelButtonText: 'No, annulla'
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.bookingService.confirmBooking(id).subscribe((response) => {
-  //         Swal.fire(
-  //           'Confermato!',
-  //           response, // Mostra la risposta come messaggio di successo
-  //           'success'
-  //         );
-  //         this.loadBookings();
-  //       }, (error) => {
-  //         Swal.fire(
-  //           'Errore!',
-  //           'Si è verificato un errore durante la conferma della prenotazione.',
-  //           'error'
-  //         );
-  //         console.error(error);
-  //       });
-  //     }
-  //   });
-  // }
+
 }
