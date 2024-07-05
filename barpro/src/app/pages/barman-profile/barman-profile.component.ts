@@ -96,7 +96,7 @@ export class BarmanProfileComponent implements OnInit {
         lastName: this.editForm.value.lastName,
         email: this.editForm.value.email,
         city: this.editForm.value.city,
-        password: '',
+        password: '0',
         description: this.editForm.value.description,
         experienceYears: this.editForm.value.experienceYears
       };
@@ -104,6 +104,8 @@ export class BarmanProfileComponent implements OnInit {
       if (this.editForm.value.password) {
         updatedBarman.password = this.editForm.value.password;
       }
+
+      console.log(updatedBarman);
 
       this.barmanService.updateBarman(this.barman.id, updatedBarman).subscribe(() => {
         Swal.fire('Modificato!', 'I dati del barman sono stati aggiornati con successo.', 'success');
