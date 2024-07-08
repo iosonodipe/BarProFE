@@ -2,3 +2,65 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+$primary: #45A29E;
+$secondary: #6ecfca;
+$tertiary: #eceeee;
+
+.custom-btn {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  border: 3px solid $primary  ;
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+  color: $primary ;
+  text-decoration: none;
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+
+.custom-btn:before {
+  transition: 0.5s all ease;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  opacity: 0;
+  content: '';
+  background-color: $primary  ;
+  z-index: -1;
+}
+
+.custom-btn:hover, .custom-btn:focus {
+  color: white;
+}
+
+.custom-btn:hover:before, .custom-btn:focus:before {
+  transition: 0.5s all ease;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+.custom-btn:active {
+  transform: scale(0.9);
+}
+
+.nav-link{
+  &:hover{
+    color: $secondary;
+  }
+  &:focus{
+    color: $secondary;
+  }
+  color: $primary;
+  font-weight: bold;
+  font-size: 1.1rem;
+}

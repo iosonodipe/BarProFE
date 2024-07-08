@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { BarmanService } from '../barman/barman.service';
 import { IBarman } from '../../models/i-barman';
+import { faGlassMartini, faGlassMartiniAlt, faListOl } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +10,9 @@ import { IBarman } from '../../models/i-barman';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  list = faListOl
+  message = faPaperPlane
+  drink = faGlassMartiniAlt
 
   constructor(private barmanSvc: BarmanService) {
     barmanSvc.$barmen.subscribe(barman => this.topBarmen = this.getRandomTopRatedBarmen(barman));
@@ -15,7 +20,7 @@ export class HomeComponent {
 
   topBarmen: IBarman[] = [];
 
-  getRandomTopRatedBarmen(barmen: IBarman[], count: number = 5): IBarman[] {
+  getRandomTopRatedBarmen(barmen: IBarman[], count: number = 6): IBarman[] {
     // Ordina i barman in ordine decrescente di rating
     const sortedBarmen = barmen.sort((a, b) => b.rating - a.rating);
 

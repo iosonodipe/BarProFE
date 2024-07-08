@@ -1,41 +1,46 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="">BarPRO</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/our-barmen" *ngIf="isUser || !isUserLoggedIn">I nostri barman</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/find-barman" *ngIf="isUser">Trova il tuo barman</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/my-bookings" *ngIf="isUser">Le mie prenotazioni</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/my-events" *ngIf="isBarman">I miei eventi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/quotation" *ngIf="isBarman">Quotazioni</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/barman-profile" *ngIf="isBarman">Profilo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/user-profile" *ngIf="isUser">Profilo</a>
-        </li>
+<header>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/"><img src="assets/img/logo.jpg" alt=""></a>
+      <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarSupportedContent" aria-expanded="!isNavbarCollapsed" aria-label="Toggle navigation">
+        <fa-icon [icon]="faBars"></fa-icon>
+      </button>
+      <div [ngbCollapse]="isNavbarCollapsed" id="navbarSupportedContent" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/our-barmen" *ngIf="isUser || !isUserLoggedIn">I nostri barman</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/find-barman" *ngIf="isUser">Trova il tuo barman</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/my-bookings" *ngIf="isUser">Le mie prenotazioni</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/my-events" *ngIf="isBarman">I miei eventi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/quotation" *ngIf="isBarman">Quotazioni</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/barman-profile" *ngIf="isBarman">Profilo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/user-profile" *ngIf="isUser">Profilo</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <a *ngIf="!isUserLoggedIn" class="custom-btn me-2" routerLink="/auth/login">Login</a>
+          <a *ngIf="!isUserLoggedIn" class="custom-btn" routerLink="/auth/register">Registrati</a>
+          <button *ngIf="isUserLoggedIn" class="custom-btn" (click)="logout()">Logout</button>
 
-      </ul>
-      <form class="d-flex" role="search">
-        <a *ngIf="!isUserLoggedIn" class="btn btn-outline-success" routerLink="/auth/login">Login</a>
-        <button *ngIf="isUserLoggedIn" class="btn btn-outline-danger" (click)="logout()">Logout</button>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+  <!-- Navbar -->
+</header>

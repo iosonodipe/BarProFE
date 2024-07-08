@@ -39,6 +39,6 @@ import { AuthInterceptor } from './auth/auth.interceptor';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent], // necessary for Swiper custom elements registration in Angular 9+
 })
 export class AppModule { }

@@ -1,19 +1,55 @@
 <section class="hero-section">
-  <div class="container content">
-      <div class="row">
-          <div class="col-md-12">
-              <h1 class="display-4">Il tuo bar preferito a casa tua</h1>
-              <p class="lead">Create lifetime memories in unforgettable locations around the world</p>
-              <a routerLink="/our-barmen" class="btn btn-lg btn-custom">I nostri barman</a>
-          </div>
-      </div>
+  <div class="overlay">
+    <h1>Barman a domicilio</h1>
+    <h3>Scegli fra una vasta gamma di professionisti quello più adatto alle tue esigenze!</h3>
+    <br />
+    <a routerLink="/our-barmen" class="custom-btn">I nostri barman</a>
   </div>
 </section>
-<section class="top-barmen">
-  <div class="container mt-5">
-    <h2>I migliori barman su BarPRO</h2>
-    <div class="row g-2 mt-3">
-      <div class="col-12" *ngFor="let barman of topBarmen">
+
+<section class="how-it-works container mt-5">
+  <div class="row">
+    <!-- Punto 1 -->
+    <div class="col-12 mb-4">
+      <div class="row align-items-center">
+        <div class="col-3 col-sm-2 text-center">
+          <fa-icon [icon]="list"></fa-icon>
+        </div>
+        <div class="col-9 col-sm-10">
+          <h4>Nessun intermediario: trova il barman perfetto per il tuo evento scegliendo tra centinaia di utenti</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Punto 2 -->
+    <div class="col-12 mb-4">
+      <div class="row align-items-center">
+        <div class="col-3 col-sm-2 text-center">
+          <fa-icon [icon]="message"></fa-icon>
+        </div>
+        <div class="col-9 col-sm-10">
+          <h4>Tutto in un posto: confrontati con il barman e prenota il servizio direttamente online </h4>
+        </div>
+      </div>
+    </div>
+    <!-- Punto 3 -->
+    <div class="col-12 mb-4">
+      <div class="row align-items-center">
+        <div class="col-3 col-sm-2 text-center">
+          <fa-icon [icon]="drink"></fa-icon>
+        </div>
+        <div class="col-9 col-sm-10">
+          <h4>Finito! Stupisci tutti i tuoi amici con la qualità BarPRO! </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="top-barmen py-5">
+  <div class="container">
+    <h2 class="text-center fs-1">I migliori su BarPRO</h2>
+    <div class="row g-2 mt-4 d-flex justify-content-center">
+      <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center" *ngFor="let barman of topBarmen">
         <app-barman-card [barman]="barman"></app-barman-card>
       </div>
     </div>

@@ -31,6 +31,7 @@
     "ngx-sweetalert2": "^0.2.7",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.12.1",
+    "swiper": "^11.1.4",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },
