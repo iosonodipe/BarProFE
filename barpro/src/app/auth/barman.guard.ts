@@ -1,37 +1,29 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanActivateChild,
-  GuardResult,
-  MaybeAsync,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { CanActivate, CanActivateChild, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class BarmanGuard implements CanActivate, CanActivateChild {
-  constructor(private authSvc: AuthService, private router: Router) {}
+  constructor(
+    private authSvc: AuthService,
+    private router: Router
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    if (!this.authSvc.isBarman()) {
-
-      this.router.navigate(['/']);
-      return false
+    state: RouterStateSnapshot): boolean {
+    if (this.authSvc.isBarman()) {
+      return true;
     }
-    return true;
+    this.router.navigate(['/auth/login']);
+    return false;
   }
 
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+    state: RouterStateSnapshot): boolean {
     return this.canActivate(childRoute, state);
   }
 }

@@ -2,46 +2,70 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <h2>Registrazione</h2>
-      <form (ngSubmit)="register()">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="mb-3 form-check">
+          <input type="checkbox" id="isBarman" class="form-check-input" formControlName="isBarman">
+          <label for="isBarman" class="form-check-label">Sono un barman</label>
+        </div>
         <div class="mb-3">
           <label for="firstName" class="form-label">Nome</label>
-          <input type="text" id="firstName" class="form-control" [(ngModel)]="registerUserData.firstName" name="firstName" required>
+          <input type="text" id="firstName" class="form-control" formControlName="firstName">
+          <div *ngIf="registerForm.controls['firstName'].invalid && (registerForm.controls['firstName'].dirty || registerForm.controls['firstName'].touched)" class="text-danger">
+            Nome è obbligatorio
+          </div>
         </div>
         <div class="mb-3">
           <label for="lastName" class="form-label">Cognome</label>
-          <input type="text" id="lastName" class="form-control" [(ngModel)]="registerUserData.lastName" name="lastName" required>
+          <input type="text" id="lastName" class="form-control" formControlName="lastName">
+          <div *ngIf="registerForm.controls['lastName'].invalid && (registerForm.controls['lastName'].dirty || registerForm.controls['lastName'].touched)" class="text-danger">
+            Cognome è obbligatorio
+          </div>
         </div>
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
-          <input type="text" id="username" class="form-control" [(ngModel)]="registerUserData.username" name="username" required>
+          <input type="text" id="username" class="form-control" formControlName="username">
+          <div *ngIf="registerForm.controls['username'].invalid && (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)" class="text-danger">
+            Username è obbligatorio
+          </div>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" class="form-control" [(ngModel)]="registerUserData.email" name="email" required>
+          <input type="email" id="email" class="form-control" formControlName="email">
+          <div *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)" class="text-danger">
+            Email è obbligatoria e deve essere valida
+          </div>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" class="form-control" [(ngModel)]="registerUserData.password" name="password" required>
+          <input type="password" id="password" class="form-control" formControlName="password">
+          <div *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)" class="text-danger">
+            Password è obbligatoria
+          </div>
         </div>
         <div class="mb-3">
           <label for="city" class="form-label">Città</label>
-          <input type="text" id="city" class="form-control" [(ngModel)]="registerUserData.city" name="city" required>
+          <input type="text" id="city" class="form-control" formControlName="city">
+          <div *ngIf="registerForm.controls['city'].invalid && (registerForm.controls['city'].dirty || registerForm.controls['city'].touched)" class="text-danger">
+            Città è obbligatoria
+          </div>
         </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" id="isBarman" class="form-check-input" [(ngModel)]="isBarman" name="isBarman">
-          <label for="isBarman" class="form-check-label">Sono un barman</label>
-        </div>
-        <div *ngIf="isBarman">
+        <div *ngIf="registerForm.controls['isBarman'].value">
           <div class="mb-3">
             <label for="experienceYears" class="form-label">Anni di esperienza</label>
-            <input type="number" id="experienceYears" class="form-control" [(ngModel)]="registerBarmanData.experienceYears" name="experienceYears">
+            <input type="number" id="experienceYears" class="form-control" formControlName="experienceYears">
+            <div *ngIf="registerForm.controls['experienceYears'].invalid && (registerForm.controls['experienceYears'].dirty || registerForm.controls['experienceYears'].touched)" class="text-danger">
+              Anni di esperienza è obbligatorio
+            </div>
           </div>
           <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>
-            <textarea id="description" class="form-control" [(ngModel)]="registerBarmanData.description" name="description"></textarea>
+            <textarea id="description" class="form-control" formControlName="description"></textarea>
+            <div *ngIf="registerForm.controls['description'].invalid && (registerForm.controls['description'].dirty || registerForm.controls['description'].touched)" class="text-danger">
+              Descrizione è obbligatoria
+            </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Registrati</button>
+        <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Registrati</button>
       </form>
     </div>
   </div>

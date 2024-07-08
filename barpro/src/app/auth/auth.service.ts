@@ -77,8 +77,12 @@ export class AuthService {
 
           this.authSubject.next(user); //comunico al subject che l'utente si è loggato
           localStorage.setItem('accessData', JSON.stringify(data));
-          this.autoLogout(token); // riavvia il timer per la scadenza della sessione
-
+          this.autoLogout(token);
+          if (this.isBarman()) {
+            this.router.navigate(['/barman-profile']);
+          } else {
+            this.router.navigate(['/user-profile']);
+          } // riavvia il timer per la scadenza della sessione
         }
       }));
   }
@@ -88,7 +92,7 @@ export class AuthService {
     this.isBarmanSubject.next(false);
     this.isUserSubject.next(false);
     localStorage.removeItem('accessData'); //cancello i dati dell'utente
-    this.router.navigate(['/auth/login']); //mando via l'utente loggato
+    this.router.navigate(['/']); //mando via l'utente loggato
   }
 
   getAccessToken(): string {

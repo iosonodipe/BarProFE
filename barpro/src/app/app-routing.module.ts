@@ -38,8 +38,6 @@ const routes: Routes = [
       import('./pages/our-barmen/our-barmen.module').then(
         (m) => m.OurBarmenModule
       ),
-      canActivate: [UserGuard],
-      canActivateChild: [UserGuard],
   },
   {
     path: 'find-barman',
