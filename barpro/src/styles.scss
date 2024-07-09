@@ -7,6 +7,10 @@ $primary: #45A29E;
 $secondary: #6ecfca;
 $tertiary: #eceeee;
 
+html {
+  scroll-behavior: smooth;
+}
+
 .custom-btn {
   font-size: 1rem;
   letter-spacing: 2px;

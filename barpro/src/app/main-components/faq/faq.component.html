@@ -1,0 +1,17 @@
+<section class="faq-section py-5">
+  <div class="container">
+    <h2 class="mb-4">Domande Frequenti</h2>
+    <div ngbAccordion #acc="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
+      <div ngbAccordionItem *ngFor="let faq of faqs; let i = index">
+        <h2 ngbAccordionHeader>
+          <button ngbAccordionButton>{{ faq.question }}</button>
+        </h2>
+        <div ngbAccordionCollapse>
+          <div ngbAccordionBody class="accordion-body-custom">
+            <p>{{ faq.answer }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

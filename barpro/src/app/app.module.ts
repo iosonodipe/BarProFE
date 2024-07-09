@@ -13,13 +13,15 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { FaqComponent } from './main-components/faq/faq.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,

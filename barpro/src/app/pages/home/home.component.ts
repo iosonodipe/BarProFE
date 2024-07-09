@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BarmanService } from '../barman/barman.service';
 import { IBarman } from '../../models/i-barman';
-import { faGlassMartini, faGlassMartiniAlt, faListOl } from '@fortawesome/free-solid-svg-icons';
+import { faGlassMartiniAlt, faListOl } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -20,7 +20,7 @@ export class HomeComponent {
 
   topBarmen: IBarman[] = [];
 
-  getRandomTopRatedBarmen(barmen: IBarman[], count: number = 6): IBarman[] {
+  getRandomTopRatedBarmen(barmen: IBarman[], count: number = 8): IBarman[] {
     // Ordina i barman in ordine decrescente di rating
     const sortedBarmen = barmen.sort((a, b) => b.rating - a.rating);
 
@@ -32,4 +32,6 @@ export class HomeComponent {
     // Altrimenti, restituisci i primi 'count' barman
     return sortedBarmen.slice(0, count);
   }
+
+
 }

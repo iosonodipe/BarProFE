@@ -1,0 +1,36 @@
+$primary: #45A29E;
+$secondary: #6ecfca;
+$tertiary: #eceeee;
+
+.faq-section {
+  padding: 50px 0;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    // color: $primary;
+    font-weight: bold;
+  }
+
+  .accordion-button {
+    font-weight: bold;
+    color: #45A29E;
+    font-size: 1.3rem;
+  }
+
+
+  .accordion-body-custom {
+    padding: 20px;
+    font-size: 1.1rem;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .collapse.show .accordion-body-custom {
+    max-height: 500px; /* You may need to adjust this value */
+    opacity: 1;
+  }
+}
