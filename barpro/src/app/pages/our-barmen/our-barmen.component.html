@@ -5,7 +5,6 @@
 </div>
 
 <div class="container mt-5">
-  <h2>I nostri barman</h2>
   <div class="row mb-3">
     <div class="col-md-6">
       <label for="sortBy" class="form-label">Ordina per</label>
@@ -15,15 +14,17 @@
         <option value="city">Città</option>
       </select>
     </div>
-    <div *ngIf="sortBy === 'city'" class="col-md-6">
-      <label for="city" class="form-label">Città</label>
-      <input id="city" type="text" class="form-control" [(ngModel)]="city" (input)="applyFilters()" />
-    </div>
+
     <div class="col-md-6">
       <label for="pageSize" class="form-label">Elementi per pagina</label>
       <select id="pageSize" class="form-select" [(ngModel)]="size" (change)="applyFilters()">
         <option *ngFor="let s of pageSizeOptions" [value]="s">{{ s }}</option>
       </select>
+    </div>
+
+    <div *ngIf="sortBy === 'city'" class="col-md-6 mt-2">
+      <label for="city" class="form-label">Città</label>
+      <input id="city" type="text" class="form-control" [(ngModel)]="city" (input)="applyFilters()" />
     </div>
   </div>
   <div class="row">

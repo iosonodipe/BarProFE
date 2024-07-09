@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IBarman } from '../../models/i-barman';
 import { BarmanService } from '../barman/barman.service';
+import { LoaderService } from '../../main-components/loader/loader.service';
 
 @Component({
   selector: 'app-our-barmen',
@@ -16,16 +17,23 @@ export class OurBarmenComponent implements OnInit {
   totalPages: number = 0;
   pageSizeOptions: number[] = [5, 10, 20, 50]; // Opzioni di dimensione della pagina
 
-  constructor(private barmanService: BarmanService) {}
+  constructor(private barmanService: BarmanService, private loaderService: LoaderService) {}
 
   ngOnInit(): void {
     this.loadBarmen();
   }
 
   loadBarmen(): void {
+    this.loaderService.showLoading();
     this.barmanService.getAll(this.page, this.size, this.sortBy).subscribe(data => {
-      this.barmen = data.content;
-      this.totalPages = data.totalPages;
+
+      setTimeout(() => {
+        this.loaderService.hideLoading()
+        this.barmen = data.content;
+        this.totalPages = data.totalPages;
+      }, 400)
+
+
     });
   }
 

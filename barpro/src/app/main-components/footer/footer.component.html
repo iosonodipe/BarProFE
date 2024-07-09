@@ -1,6 +1,9 @@
 <!-- Remove the container if you want to extend the Footer to full width. -->
 <!-- Footer -->
-<footer class="text-center text-white mt-5">
+<footer class="text-center mt-5">
+  <div class="arrow-to-top" (click)="scrollToTop()">
+    <fa-icon [icon]="arrow"></fa-icon>
+  </div>
   <!-- Grid container -->
   <div class="container">
     <!-- Section: Links -->
@@ -21,13 +24,19 @@
             <a routerLink="" >Chi siamo</a>
           </h6>
         </div>
+
+        <div class="col-md-2">
+          <h6 class="text-uppercase font-weight-bold">
+            <a [routerLink]="['/']" fragment="faq-section" >FAQs</a>
+          </h6>
+        </div>
         <!-- Grid column -->
 
         <!-- Grid column -->
         <div class="col-md-2">
           <h6 class="text-uppercase font-weight-bold">
-            <a *ngIf="isUser || isUserLoggedIn" routerLink="/user-profile" >Profilo</a>
-            <a *ngIf="isBarman || isUserLoggedIn" routerLink="/barman-profile" >Profilo</a>
+            <a *ngIf="isUser && isUserLoggedIn" routerLink="/user-profile" >Profilo</a>
+            <a *ngIf="isBarman && isUserLoggedIn" routerLink="/barman-profile" >Profilo</a>
           </h6>
         </div>
         <!-- Grid column -->

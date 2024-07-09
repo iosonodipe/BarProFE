@@ -1,6 +1,6 @@
 <header>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
     <div class="container">
       <a class="navbar-brand" routerLink="/"><img src="assets/img/logo.jpg" alt=""></a>
       <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarSupportedContent" aria-expanded="!isNavbarCollapsed" aria-label="Toggle navigation">
@@ -13,6 +13,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/our-barmen" *ngIf="isUser || !isUserLoggedIn">I nostri barman</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/']" fragment="faq-section" *ngIf="isUser || !isUserLoggedIn">FAQs</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/find-barman" *ngIf="isUser">Trova il tuo barman</a>

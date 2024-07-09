@@ -39,3 +39,18 @@ header{
 img{
   width: 150px;
 }
+
+.navbar-hidden {
+  transform: translateY(-100%);
+}
+
+.navbar-visible {
+  transform: translateY(0);
+}
+
+nav{
+  transition: transform 0.2s ease-in-out;
+  &:hover{
+    transform: scale(1.03);
+  }
+}

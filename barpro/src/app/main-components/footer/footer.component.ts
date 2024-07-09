@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faAngleUp, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-footer',
@@ -13,6 +14,7 @@ export class FooterComponent {
   isUserLoggedIn: boolean = false;
   linkedin = faLinkedin
   github = faGithub
+  arrow = faAngleUp
 
   constructor(private authSvc:AuthService){}
 
@@ -26,6 +28,10 @@ export class FooterComponent {
     this.authSvc.isBarman$.subscribe(data => {
       this.isBarman = data;
     })
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
 }

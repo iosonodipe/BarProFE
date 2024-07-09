@@ -14,6 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { FaqComponent } from './main-components/faq/faq.component';
+import { LoaderComponent } from './main-components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FaqComponent } from './main-components/faq/faq.component';
     NavbarComponent,
     FooterComponent,
     HomeComponent,
-    FaqComponent
+    FaqComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

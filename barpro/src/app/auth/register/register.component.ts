@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { IUser } from '../../models/i-user';
 import { IBarman } from '../../models/i-barman';
 import Swal from 'sweetalert2';
+import { LoaderService } from '../../main-components/loader/loader.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,8 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private router: Router
+    private router: Router,
+    private loaderService: LoaderService
   ) {
     this.registerForm = this.fb.group({
       isBarman: [false],
@@ -46,8 +48,10 @@ export class RegisterComponent {
   }
 
   register() {
+    this.loaderService.showLoading();
     let loginData: ILoginData;
     if (this.registerForm.invalid) {
+      this.loaderService.hideLoading();
       return;
     }
 
@@ -59,6 +63,7 @@ export class RegisterComponent {
 
       this.authSvc.registerBarman(registerBarmanData).subscribe(
         data => {
+          this.loaderService.hideLoading()
           Swal.fire({
             title: 'Registrato!',
             text: 'Registrazione completata con successo.',
@@ -73,6 +78,7 @@ export class RegisterComponent {
           this.authSvc.login(loginData).subscribe()
         },
         error => {
+          this.loaderService.hideLoading()
           Swal.fire('Errore!', 'Registrazione fallita. Riprova più tardi.', 'error');
           console.error('Barman registration failed', error);
         }
@@ -85,6 +91,7 @@ export class RegisterComponent {
 
       this.authSvc.registerUser(registerUserData).subscribe(
         data => {
+          this.loaderService.hideLoading()
           Swal.fire({
             title: 'Registrato!',
             text: 'Registrazione completata con successo.',
@@ -99,6 +106,7 @@ export class RegisterComponent {
           this.authSvc.login(loginData).subscribe()
         },
         error => {
+          this.loaderService.hideLoading()
           Swal.fire('Errore!', 'Registrazione fallita. Riprova più tardi.', 'error');
           console.error('User registration failed', error);
         }
