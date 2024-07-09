@@ -1,0 +1,53 @@
+$primary: #45A29E;
+$secondary: #6ecfca;
+$tertiary: #eceeee;
+
+.active > .page-link {
+    color: white;
+    background-color: $primary;
+    border-color: $primary;
+}
+
+.page-link{
+  color: $primary;
+}
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 30vh;
+  background-image: url('/assets/img/our-barmen.webp');
+  background-size: cover;
+  background-position: center top;
+  .overlay{
+    width: 100%;
+    height: 100%;
+    padding: 100px 50px 100px 50px;
+    color: #FFF;
+    text-shadow: 1px 1px 1px #333;
+    background-image: linear-gradient( 135deg, #a0ecf18b 10%, #60e3e86b 100%);
+
+  }
+}
+
+.hero-heading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+// @media (max-width: 768px) {
+//   .hero-section {
+//     height: 300px; /* Altezza per mobile */
+//     background-image: url('path/to/your/mobile-image.jpg');
+//   }
+
+//   .hero-heading {
+//     font-size: 2em;
+//   }
+// }

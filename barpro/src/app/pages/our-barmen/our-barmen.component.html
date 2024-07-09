@@ -1,3 +1,9 @@
+<div class="hero-section">
+  <div class="overlay">
+    <h1 class="hero-heading">I nostri barman</h1>
+  </div>
+</div>
+
 <div class="container mt-5">
   <h2>I nostri barman</h2>
   <div class="row mb-3">
@@ -13,9 +19,15 @@
       <label for="city" class="form-label">Città</label>
       <input id="city" type="text" class="form-control" [(ngModel)]="city" (input)="applyFilters()" />
     </div>
+    <div class="col-md-6">
+      <label for="pageSize" class="form-label">Elementi per pagina</label>
+      <select id="pageSize" class="form-select" [(ngModel)]="size" (change)="applyFilters()">
+        <option *ngFor="let s of pageSizeOptions" [value]="s">{{ s }}</option>
+      </select>
+    </div>
   </div>
   <div class="row">
-    <div *ngFor="let barman of barmen" class="col-md-4 mb-4">
+    <div *ngFor="let barman of barmen" class="col-12 col-md-6 col-lg-4 col-xl-3 mb-5">
       <app-barman-card [barman]="barman"></app-barman-card>
     </div>
   </div>

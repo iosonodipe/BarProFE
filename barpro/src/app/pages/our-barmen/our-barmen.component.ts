@@ -14,6 +14,7 @@ export class OurBarmenComponent implements OnInit {
   sortBy: string = 'id';
   city: string = '';
   totalPages: number = 0;
+  pageSizeOptions: number[] = [5, 10, 20, 50]; // Opzioni di dimensione della pagina
 
   constructor(private barmanService: BarmanService) {}
 
@@ -29,20 +30,21 @@ export class OurBarmenComponent implements OnInit {
   }
 
   applyFilters(): void {
-    if (this.sortBy === 'city' && this.city) {
-      this.barmanService.getByCity(this.page, this.size, this.city).subscribe(data => {
-        this.barmen = data.content;
-        this.totalPages = data.totalPages;
-      });
-    } else {
-      this.loadBarmen();
-    }
+    this.page = 0; // Reset page to 0 whenever filters are applied
+    this.loadBarmen();
   }
 
   changePage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
       this.page = page;
-      this.applyFilters();
+      if (this.sortBy === 'city' && this.city) {
+        this.barmanService.getByCity(this.page, this.size, this.city).subscribe(data => {
+          this.barmen = data.content;
+          this.totalPages = data.totalPages;
+        });
+      } else {
+        this.loadBarmen();
+      }
     }
   }
 }
