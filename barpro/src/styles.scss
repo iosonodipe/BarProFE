@@ -3,10 +3,9 @@
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
-$primary: #45A29E;
-$secondary: #6ecfca;
-$tertiary: #eceeee;
-
+$primary: #E43d12;
+$secondary: #db5d3e;
+$tertiary: #ebe9e1;
 html {
   scroll-behavior: smooth;
 }
@@ -57,14 +56,26 @@ html {
   transform: scale(0.9);
 }
 
+.custom-btn:disabled{
+  color: hsla(12, 85%, 48%, 0.356);
+  border-color:  hsla(12, 85%, 48%, 0.356);
+  &:hover:before{
+    background-color: white;
+    opacity: 0;
+  }
+}
+
 .nav-link{
   &:hover{
-    color: $secondary;
+    color: #fa3605;
+    width: 100%;
+    left: 0;
+    transform: scale(1.1);
   }
   &:focus{
-    color: $secondary;
+    color: #fa3605;
   }
-  color: $primary;
+  color: $secondary;
   font-weight: bold;
   font-size: 1.1rem;
 }

@@ -1,11 +1,15 @@
-$primary: #45A29E;
-$secondary: #6ecfca;
-$tertiary: #eceeee;
+$primary: #E43d12;
+$secondary: #db5d3e;
+$tertiary: #ebe9e1;
 
 .active > .page-link {
     color: white;
     background-color: $primary;
     border-color: $primary;
+}
+
+.disabled > .page-link{
+  background-color: $tertiary;
 }
 
 .page-link{
@@ -15,7 +19,8 @@ $tertiary: #eceeee;
 .hero-section {
   position: relative;
   width: 100%;
-  height: 30vh;
+  height: 40vh;
+  margin-top: -60px;
   background-image: url('/assets/img/our-barmen.webp');
   background-size: cover;
   background-position: center top;
@@ -24,9 +29,8 @@ $tertiary: #eceeee;
     height: 100%;
     padding: 100px 50px 100px 50px;
     color: #FFF;
-    text-shadow: 1px 1px 1px #333;
-    background-image: linear-gradient( 135deg, #a0ecf18b 10%, #60e3e86b 100%);
-
+    text-shadow: 2px 2px 2px #333;
+    background-image: linear-gradient( 135deg, #da875a6b 10%, #e8783c6b 100%);
   }
 }
 

@@ -1,13 +1,19 @@
-$primary: #45A29E;
-$secondary: #6ecfca;
-$tertiary: #eceeee;
+$primary: #E43d12;
+$secondary: #db5d3e;
+$tertiary: #ebe9e1;
+
 
 .card {
   width: 300px;
-  background: white;
+  background: $tertiary;
   padding: .4em;
   border-radius: 6px;
   text-align: center;
+  border-color: $tertiary;
+  &:hover{
+    transform: scale(0.96);
+    transition: all 0.2s ease-in-out;
+  }
 }
 
 .card-image {
@@ -24,10 +30,6 @@ $tertiary: #eceeee;
   border-radius: 6px 6px 0 0;
 }
 
-.card-image:hover {
-  transform: scale(0.96);
-  transition: all 0.2s ease;
-}
 
 .category {
   text-transform: uppercase;
@@ -53,7 +55,7 @@ $tertiary: #eceeee;
 }
 
 .author {
-  color: gray;
+  color: rgb(130, 124, 124);
   font-weight: 400;
   font-size: 1.1rem;
   padding-top: 20px;
