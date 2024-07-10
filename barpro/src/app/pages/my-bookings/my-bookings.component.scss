@@ -1,0 +1,37 @@
+$primary: #E43d12;
+$secondary: #db5d3e;
+$tertiary: #ebe9e1;
+
+
+.bookings{
+  padding: 0 20px;
+}
+
+.accordion-button {
+  font-weight: bold;
+  color: $primary;
+  font-size: 1.2rem;
+}
+
+
+.accordion-body-custom {
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
+.accordion-collapse.show .accordion-body-custom {
+  max-height: 1000px; /* Adjust this value based on your content */
+  padding: 1rem;
+}
+
+.hero-section{
+  border-radius: 0;
+  background: url('/assets/img/bookings.webp');
+
+}
+
+.hero-heading{
+  font-size: 3.5rem;
+}

@@ -7,10 +7,7 @@
         <fa-icon [icon]="faBars"></fa-icon>
       </button>
       <div [ngbCollapse]="isNavbarCollapsed" id="navbarSupportedContent" class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/">Home</a>
-          </li>
+        <ul class="navbar-nav me-auto text-center">
           <li class="nav-item">
             <a class="nav-link" routerLink="/our-barmen" *ngIf="isUser || !isUserLoggedIn">I nostri barman</a>
           </li>
@@ -36,7 +33,7 @@
             <a class="nav-link" routerLink="/user-profile" *ngIf="isUser">Profilo</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
+        <form class="d-flex px-2" role="search">
           <a *ngIf="!isUserLoggedIn" class="custom-btn me-2" routerLink="/auth/login">Login</a>
           <a *ngIf="!isUserLoggedIn" class="custom-btn" routerLink="/auth/register">Registrati</a>
           <button *ngIf="isUserLoggedIn" class="custom-btn" (click)="logout()">Logout</button>

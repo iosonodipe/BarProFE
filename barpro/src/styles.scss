@@ -10,6 +10,31 @@ html {
   scroll-behavior: smooth;
 }
 
+.hero-section {
+	background: url('/assets/img/barman.webp');
+	text-align: center;
+	width: 100%;
+	height: auto;
+  margin-top: -60px;
+	background-size: cover;
+	background-attachment: fixed;
+	position: relative;
+	overflow: hidden;
+	border-radius: 0 0 85% 85% / 30%;
+  a{
+    text-shadow: none;
+  }
+}
+.hero-section .overlay{
+	width: 100%;
+	height: 100%;
+	padding: 100px 50px 100px 50px;
+	color: #FFF;
+	text-shadow: 2px 2px 2px #333;
+  background-image: linear-gradient( 135deg, #da875a6b 10%, #e8783c6b 100%);
+
+}
+
 .custom-btn {
   font-size: 1rem;
   letter-spacing: 2px;
@@ -26,6 +51,7 @@ html {
   text-decoration: none;
   transition: 0.3s ease all;
   z-index: 1;
+  background-color: white;
 }
 
 .custom-btn:before {
@@ -67,13 +93,13 @@ html {
 
 .nav-link{
   &:hover{
-    color: #fa3605;
-    width: 100%;
-    left: 0;
-    transform: scale(1.1);
+    color: #c62800;
+    // width: 100%;
+    // left: 0;
+    // transform: scale(1.1);
   }
   &:focus{
-    color: #fa3605;
+    color: #c62800;
   }
   color: $secondary;
   font-weight: bold;

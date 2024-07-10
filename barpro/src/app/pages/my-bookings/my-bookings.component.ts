@@ -105,7 +105,13 @@ export class MyBookingsComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.quotationService.deleteQuotation(id).subscribe(() => {
-          Swal.fire('Eliminato!', '', 'success');
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Eliminato!",
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.loadQuotations();
         });
       } else if (result.isDenied) {
@@ -180,7 +186,13 @@ export class MyBookingsComponent implements OnInit {
           this.bookingService
             .updateBooking(this.currentBooking.id, updatedBooking)
             .subscribe(() => {
-              Swal.fire('Salvato!', '', 'success');
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Salvato!",
+                showConfirmButton: false,
+                timer: 1500
+              });
               this.loadBookings();
               this.modalService.dismissAll();
             });
@@ -214,7 +226,13 @@ export class MyBookingsComponent implements OnInit {
             .updateQuotation(this.currentQuotation.id, updatedQuotation)
             .subscribe(
               () => {
-                Swal.fire('Salvato!', '', 'success');
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Salvato!",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
                 this.loadQuotations();
                 this.modalService.dismissAll();
               },
@@ -240,7 +258,13 @@ export class MyBookingsComponent implements OnInit {
       if (result.isConfirmed) {
         this.bookingService.deleteBooking(id).subscribe(() => {
           this.loadBookings();
-          Swal.fire('Eliminato!', '', 'success');
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Eliminato!",
+            showConfirmButton: false,
+            timer: 1500
+          });
         });
       }
     });

@@ -1,55 +1,59 @@
+<section class="hero-section">
+  <div class="overlay">
+    <h2 class="hero-heading">Prenotazioni</h2>
+    <p class="fs-4 fst-italic mb-0">Modifica, elimina e visualizza tutti le tue prenotazioni e richieste di quotazione.</p>
+  </div>
+</section>
+
 <div class="container mt-5">
-  <ul ngbNav #nav="ngbNav" class="nav-tabs">
+  <ul ngbNav #nav="ngbNav" class="nav-tabs mb-3 px-3">
     <li ngbNavItem>
       <a ngbNavLink> Prenotazioni </a>
-      <ng-template ngbNavContent>
+      <ng-template ngbNavContent class="bookings">
         <div *ngIf="pendingBookings.length === 0 && confirmedBookings.length === 0" class="alert alert-light" role="alert">
-          Nessuna prenotazione effettuata.
+            Nessuna prenotazione effettuata.
         </div>
-
         <div *ngIf="pendingBookings.length > 0">
-          <h3>In attesa</h3>
-          <div *ngIf="pendingBookings.length === 0" class="alert alert-light" role="alert">
-            Nessuna prenotazione in attesa di conferma.
-          </div>
-          <div ngbAccordion>
-            <div *ngFor="let booking of pendingBookings" ngbAccordionItem>
-              <h2 ngbAccordionHeader>
-                <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
-              </h2>
-              <div ngbAccordionCollapse>
-                <div ngbAccordionBody>
-                  <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
-                  <p>Dettagli: {{booking.eventDetails}}</p>
-                  <button type="button" class="btn btn-primary" (click)="openBookingModal(contentBooking, booking)">Modifica</button>
-                  <!-- <button type="button" class="btn btn-primary" (click)="confirmBooking(booking.id)">Conferma</button> -->
-                </div>
-              </div>
+            <h3>In attesa</h3>
+            <div *ngIf="pendingBookings.length === 0" class="alert alert-light" role="alert">
+                Nessuna prenotazione in attesa di conferma.
             </div>
-          </div>
+            <div ngbAccordion [closeOthers]="true">
+                <div *ngFor="let booking of pendingBookings" ngbAccordionItem>
+                    <h2 ngbAccordionHeader>
+                        <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
+                    </h2>
+                    <div ngbAccordionCollapse>
+                        <div ngbAccordionBody class="accordion-body-custom">
+                            <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
+                            <p>Dettagli: {{booking.eventDetails}}</p>
+                            <button type="button" class="custom-btn" (click)="openBookingModal(contentBooking, booking)">Modifica</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
         <div *ngIf="confirmedBookings.length > 0" class="mt-4">
-          <h3>Confermate</h3>
-          <div *ngIf="confirmedBookings.length === 0" class="alert alert-light" role="alert">
-            Nessuna prenotazione confermata.
-          </div>
-          <div ngbAccordion>
-            <div *ngFor="let booking of confirmedBookings" ngbAccordionItem>
-              <h2 ngbAccordionHeader>
-                <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
-              </h2>
-              <div ngbAccordionCollapse>
-                <div ngbAccordionBody>
-                  <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
-                  <p>Dettagli: {{booking.eventDetails}}</p>
-                  <button type="button" class="btn btn-danger" (click)="confirmDeleteBooking(booking.id)">Elimina</button>
-                </div>
-              </div>
+            <h3>Confermate</h3>
+            <div *ngIf="confirmedBookings.length === 0" class="alert alert-light" role="alert">
+                Nessuna prenotazione confermata.
             </div>
-          </div>
+            <div ngbAccordion [closeOthers]="true">
+                <div *ngFor="let booking of confirmedBookings" ngbAccordionItem>
+                    <h2 ngbAccordionHeader>
+                        <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
+                    </h2>
+                    <div ngbAccordionCollapse>
+                        <div ngbAccordionBody class="accordion-body-custom">
+                            <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
+                            <p>Dettagli: {{booking.eventDetails}}</p>
+                            <button type="button" class="custom-btn" (click)="confirmDeleteBooking(booking.id)">Elimina</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </ng-template>
+    </ng-template>
     </li>
     <li ngbNavItem>
       <a ngbNavLink> Richieste </a>
@@ -59,7 +63,7 @@
         </div>
 
         <div class="container">
-          <div ngbAccordion *ngIf="quotations.length > 0">
+          <div ngbAccordion [closeOthers]="true" *ngIf="quotations.length > 0">
             <div *ngFor="let quotation of quotations" ngbAccordionItem>
               <h2 ngbAccordionHeader>
                 <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}}</button>
@@ -67,8 +71,8 @@
               <div ngbAccordionCollapse>
                 <div ngbAccordionBody>
                   <p>Dettagli: {{quotation.eventDetails}}</p>
-                  <button type="button" class="btn btn-primary" (click)="openQuotationModal(contentQuotation, quotation)">Modifica</button>
-                  <button type="button" class="btn btn-danger" (click)="deleteQuotation(quotation.id)">Elimina</button>
+                  <button type="button" class="custom-btn me-2" (click)="openQuotationModal(contentQuotation, quotation)">Modifica</button>
+                  <button type="button" class="custom-btn" (click)="deleteQuotation(quotation.id)">Elimina</button>
                 </div>
               </div>
             </div>

@@ -44,6 +44,7 @@ export class FindBarmanComponent {
           timer: 1500
         });
         console.log('Request submitted successfully', response);
+        this.router.navigate(['/my-bookings']);
       },
       error => {
         this.errorMessage = error;
