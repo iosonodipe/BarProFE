@@ -1,17 +1,31 @@
+<section class="hero-section">
+  <div class="overlay">
+    <h2 class="hero-heading">Eventi</h2>
+    <p class="fs-4 fst-italic mb-0">
+      Conferma, elimina e visualizza tutti i tuoi eventi in attesa e programmati.
+    </p>
+  </div>
+</section>
+
 <div class="container mt-5">
-  <h2>I tuoi eventi</h2>
   <div *ngIf="pendingBookings.length > 0">
-    <h3>Pending</h3>
-    <div ngbAccordion>
+    <h3>In attesa</h3>
+    <div ngbAccordion [closeOthers]="true">
       <div *ngFor="let booking of pendingBookings" ngbAccordionItem>
         <h2 ngbAccordionHeader>
-          <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
+          <button ngbAccordionButton>
+            {{ booking.city }} - {{ booking.date | date: 'dd/MM/yyyy - HH:mm' }}
+          </button>
         </h2>
         <div ngbAccordionCollapse>
-          <div ngbAccordionBody>
-            <p>Utente: {{booking.user.firstName}} {{booking.user.lastName}}</p>
-            <p>Dettagli: {{booking.eventDetails}}</p>
-            <button type="button" class="btn btn-primary" (click)="confirmBooking(booking.id)">Conferma</button>
+          <div ngbAccordionBody class="accordion-body-custom">
+            <h5>Utente</h5>
+            <p>{{ booking.user.firstName }} {{ booking.user.lastName }}</p>
+            <h5>Dettagli</h5>
+            <p>{{ booking.eventDetails }}</p>
+            <button type="button" class="custom-btn me-2 mt-3" (click)="confirmBooking(booking.id)">
+              Conferma
+            </button>
           </div>
         </div>
       </div>
@@ -22,17 +36,23 @@
   </div>
 
   <div *ngIf="confirmedBookings.length > 0" class="mt-4">
-    <h3>Confirmed</h3>
-    <div ngbAccordion>
+    <h3>Confermati</h3>
+    <div ngbAccordion [closeOthers]="true">
       <div *ngFor="let booking of confirmedBookings" ngbAccordionItem>
         <h2 ngbAccordionHeader>
-          <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
+          <button ngbAccordionButton>
+            {{ booking.city }} - {{ booking.date | date: 'dd/MM/yyyy - HH:mm' }}
+          </button>
         </h2>
         <div ngbAccordionCollapse>
-          <div ngbAccordionBody>
-            <p>Utente: {{booking.user.firstName}} {{booking.user.lastName}}</p>
-            <p>Dettagli: {{booking.eventDetails}}</p>
-            <button type="button" class="btn btn-danger" (click)="confirmDeleteBooking(booking.id)">Elimina</button>
+          <div ngbAccordionBody class="accordion-body-custom">
+            <h5>Utente</h5>
+            <p>{{ booking.user.firstName }} {{ booking.user.lastName }}</p>
+            <h5>Dettagli</h5>
+            <p>{{ booking.eventDetails }}</p>
+            <button type="button" class="custom-btn mt-3" (click)="confirmDeleteBooking(booking.id)">
+              Elimina
+            </button>
           </div>
         </div>
       </div>

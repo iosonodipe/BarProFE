@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookingService } from '../booking/booking.service';
 import { IBooking } from '../../models/i-booking';
 import Swal from 'sweetalert2';
+import { LoaderService } from '../../main-components/loader/loader.service';
 
 @Component({
   selector: 'app-my-events',
@@ -14,7 +15,7 @@ export class MyEventsComponent implements OnInit {
   confirmedBookings: IBooking[] = [];
 
   constructor(
-    private bookingService: BookingService
+    private bookingService: BookingService, private loader: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -56,11 +57,13 @@ export class MyEventsComponent implements OnInit {
 
   deleteBooking(id: number): void {
     this.bookingService.deleteBooking(id).subscribe(() => {
-      Swal.fire(
-        'Eliminato!',
-        'La prenotazione è stata eliminata.',
-        'success'
-      );
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Eliminato!",
+        showConfirmButton: false,
+        timer: 1500
+      });
       this.loadBookings();
     });
   }
@@ -74,14 +77,19 @@ export class MyEventsComponent implements OnInit {
       cancelButtonText: 'No, annulla'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loader.showLoading();
         this.bookingService.confirmBooking(id).subscribe((response) => {
-          Swal.fire(
-            'Confermato!',
-            response, // Mostra la risposta come messaggio di successo
-            'success'
-          );
+          this.loader.hideLoading();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Confermato!",
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.loadBookings();
         }, (error) => {
+          this.loader.hideLoading();
           Swal.fire(
             'Errore!',
             'Si è verificato un errore durante la conferma della prenotazione.',
