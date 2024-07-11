@@ -45,10 +45,17 @@
                   <p>Dettagli: {{ booking.eventDetails }}</p>
                   <button
                     type="button"
-                    class="custom-btn"
+                    class="custom-btn me-2"
                     (click)="openBookingModal(contentBooking, booking)"
                   >
                     Modifica
+                  </button>
+                  <button
+                    type="button"
+                    class="custom-btn"
+                    (click)="confirmDeleteBooking(booking.id)"
+                  >
+                    Elimina
                   </button>
                 </div>
               </div>
