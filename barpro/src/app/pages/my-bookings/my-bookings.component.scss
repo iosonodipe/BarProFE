@@ -101,10 +101,6 @@ $tertiary: #ebe9e1;
   transition: border-bottom-color 0.5s ease;
 }
 
-.barman-fields {
-  width: 100%; /* Assicura che il contenitore dei campi barman occupi tutta la larghezza */
-}
-
 .inputField:focus {
   outline: none;
   // border-bottom: 2px solid $primary;

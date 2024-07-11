@@ -12,13 +12,13 @@ const routes: Routes = [
     canActivate: [GuestGuard],
     canActivateChild: [GuestGuard],
   },
-  {
-    path: 'barman',
-    loadChildren: () =>
-      import('./pages/barman/barman.module').then((m) => m.BarmanModule),
-    canActivate: [UserGuard],
-    canActivateChild: [UserGuard],
-  },
+  // {
+  //   path: 'barman',
+  //   loadChildren: () =>
+  //     import('./pages/barman/barman.module').then((m) => m.BarmanModule),
+  //   canActivate: [UserGuard],
+  //   canActivateChild: [UserGuard],
+  // },
   {
     path: 'quotation',
     loadChildren: () =>

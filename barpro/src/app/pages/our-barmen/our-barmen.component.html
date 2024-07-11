@@ -8,7 +8,12 @@
   <div class="row mb-3">
     <div class="col-md-6">
       <label for="sortBy" class="form-label">Ordina per</label>
-      <select id="sortBy" class="form-select" [(ngModel)]="sortBy" (change)="applyFilters()">
+      <select
+        id="sortBy"
+        class="form-select"
+        [(ngModel)]="sortBy"
+        (change)="applyFilters()"
+      >
         <option value="id">ID</option>
         <option value="rating">Recensioni</option>
         <option value="city">Città</option>
@@ -17,29 +22,54 @@
 
     <div class="col-md-6">
       <label for="pageSize" class="form-label">Elementi per pagina</label>
-      <select id="pageSize" class="form-select" [(ngModel)]="size" (change)="applyFilters()">
+      <select
+        id="pageSize"
+        class="form-select"
+        [(ngModel)]="size"
+        (change)="applyFilters()"
+      >
         <option *ngFor="let s of pageSizeOptions" [value]="s">{{ s }}</option>
       </select>
     </div>
 
     <div *ngIf="sortBy === 'city'" class="col-md-6 mt-2">
       <label for="city" class="form-label">Città</label>
-      <input id="city" type="text" class="form-control" [(ngModel)]="city" (input)="applyFilters()" />
+      <input
+        id="city"
+        type="text"
+        class="form-control"
+        [(ngModel)]="city"
+        (input)="applyFilters()"
+      />
     </div>
   </div>
   <div class="row">
-    <div *ngFor="let barman of barmen" class="col-12 col-md-6 col-lg-4 col-xl-3 mb-5">
-      <app-barman-card [barman]="barman"></app-barman-card>
+    <div
+      *ngFor="let barman of barmen"
+      class="col-12 col-md-6 col-lg-4 col-xl-3 mb-5"
+    >
+      <app-barman-card
+        [barman]="barman"
+        (click)="openBarmanModal(barman, barmanModal)"
+      ></app-barman-card>
     </div>
   </div>
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       <li class="page-item" [class.disabled]="page === 0">
-        <a class="page-link" (click)="changePage(page - 1)" aria-label="Previous">
+        <a
+          class="page-link"
+          (click)="changePage(page - 1)"
+          aria-label="Previous"
+        >
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
-      <li *ngFor="let p of [].constructor(totalPages); let i = index" class="page-item" [class.active]="i === page">
+      <li
+        *ngFor="let p of [].constructor(totalPages); let i = index"
+        class="page-item"
+        [class.active]="i === page"
+      >
         <a class="page-link" (click)="changePage(i)">{{ i + 1 }}</a>
       </li>
       <li class="page-item" [class.disabled]="page === totalPages - 1">
@@ -50,3 +80,122 @@
     </ul>
   </nav>
 </div>
+
+<!-- Modale per i dettagli del barman -->
+<ng-template #barmanModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ barman?.firstName }} {{ barman?.lastName }}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <h5>Descrizione</h5>
+        <p>{{ barman?.description }}</p>
+        <h5>Anni di esperienza</h5>
+        <p>{{ barman?.experienceYears }}</p>
+        <h5>Valutazione</h5>
+        <p>{{ barman?.rating }} su 5</p>
+        <button
+          *ngIf="isUserLoggedIn"
+          class="custom-btn mt-2"
+          (click)="openContactModal(contentBooking)"
+        >
+          Contatta Barman
+        </button>
+        <div *ngIf="!isUserLoggedIn" class="alert alert-warning" role="alert">
+          Effettua il login per contattare il barman!
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modale per contattare il barman -->
+<ng-template #contentBooking let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Contatta Barman</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form #contactForm="ngForm">
+      <label for="date" class="form-check-label">Data</label>
+      <div class="inputContainer">
+        <input
+          type="date"
+          class="inputField"
+          [ngClass]="{'is-invalid': contactForm.controls['date']?.invalid && contactForm.controls['date']?.touched}"
+          id="date"
+          name="date"
+          [(ngModel)]="bookingRequest.date"
+          required
+        />
+      </div>
+      <label for="time" class="form-check-label">Ora</label>
+      <div class="inputContainer">
+        <input
+          type="time"
+          id="time"
+          class="inputField"
+          [ngClass]="{'is-invalid': contactForm.controls['time']?.invalid && contactForm.controls['time']?.touched}"
+          [(ngModel)]="bookingRequest.time"
+          name="time"
+          required
+        />
+      </div>
+      <label for="eventDetail" class="form-check-label">Dettagli evento</label>
+      <div class="inputContainer">
+        <textarea
+          class="inputField"
+          [ngClass]="{'is-invalid': contactForm.controls['eventDetails']?.invalid && contactForm.controls['eventDetails']?.touched}"
+
+          id="eventDetail"
+          name="eventDetails"
+          rows="3"
+          [(ngModel)]="bookingRequest.eventDetails"
+          required
+          maxlength="300"
+        ></textarea>
+      </div>
+      <label for="city" class="form-check-label">Città</label>
+      <div class="inputContainer">
+        <input
+          type="text"
+          class="inputField"
+          [ngClass]="{'is-invalid': contactForm.controls['city']?.invalid && contactForm.controls['city']?.touched}"
+          id="city"
+          name="city"
+          [(ngModel)]="bookingRequest.city"
+          required
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="custom-btn"
+      (click)="modal.dismiss('cancel click')"
+    >
+      Annulla
+    </button>
+    <button
+      type="button"
+      class="custom-btn"
+      [disabled]="!contactForm.valid"
+      (click)="submit(contactForm, modal)"
+    >
+      Invia
+    </button>
+  </div>
+</ng-template>

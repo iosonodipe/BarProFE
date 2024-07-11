@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IBarman } from '../../../models/i-barman';
 import { BarmanService } from '../barman.service';
 
@@ -9,6 +9,11 @@ import { BarmanService } from '../barman.service';
 })
 export class BarmanCardComponent {
   @Input() barman!: IBarman
+  @Output() cardClick = new EventEmitter<void>();
+
+  onCardClick(): void {
+    this.cardClick.emit();
+  }
 
   constructor(private barmanSvc: BarmanService) { }
 

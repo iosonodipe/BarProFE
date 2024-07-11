@@ -50,7 +50,9 @@
     <h2 class="text-center">I migliori su BarPRO</h2>
     <div class="row g-3 mt-4 d-flex justify-content-center">
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center" *ngFor="let barman of topBarmen">
+        <a routerLink="/our-barmen">
         <app-barman-card [barman]="barman"></app-barman-card>
+        </a>
       </div>
     </div>
   </div>
