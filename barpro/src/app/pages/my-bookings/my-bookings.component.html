@@ -1,7 +1,10 @@
 <section class="hero-section">
   <div class="overlay">
     <h2 class="hero-heading">Prenotazioni</h2>
-    <p class="fs-4 fst-italic mb-0">Modifica, elimina e visualizza tutti le tue prenotazioni e richieste di quotazione.</p>
+    <p class="fs-4 fst-italic mb-0">
+      Modifica, elimina e visualizza tutti le tue prenotazioni e richieste di
+      quotazione.
+    </p>
   </div>
 </section>
 
@@ -10,55 +13,93 @@
     <li ngbNavItem>
       <a ngbNavLink> Prenotazioni </a>
       <ng-template ngbNavContent class="bookings">
-        <div *ngIf="pendingBookings.length === 0 && confirmedBookings.length === 0" class="alert alert-light" role="alert">
-            Nessuna prenotazione effettuata.
+        <div
+          *ngIf="pendingBookings.length === 0 && confirmedBookings.length === 0"
+          class="alert alert-light"
+          role="alert"
+        >
+          Nessuna prenotazione effettuata.
         </div>
         <div *ngIf="pendingBookings.length > 0">
-            <h3>In attesa</h3>
-            <div *ngIf="pendingBookings.length === 0" class="alert alert-light" role="alert">
-                Nessuna prenotazione in attesa di conferma.
-            </div>
-            <div ngbAccordion [closeOthers]="true">
-                <div *ngFor="let booking of pendingBookings" ngbAccordionItem>
-                    <h2 ngbAccordionHeader>
-                        <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
-                    </h2>
-                    <div ngbAccordionCollapse>
-                        <div ngbAccordionBody class="accordion-body-custom">
-                            <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
-                            <p>Dettagli: {{booking.eventDetails}}</p>
-                            <button type="button" class="custom-btn" (click)="openBookingModal(contentBooking, booking)">Modifica</button>
-                        </div>
-                    </div>
+          <h3>In attesa</h3>
+          <div
+            *ngIf="pendingBookings.length === 0"
+            class="alert alert-light"
+            role="alert"
+          >
+            Nessuna prenotazione in attesa di conferma.
+          </div>
+          <div ngbAccordion [closeOthers]="true">
+            <div *ngFor="let booking of pendingBookings" ngbAccordionItem>
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>
+                  {{ booking.city }} - {{ booking.date }}
+                </button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="accordion-body-custom">
+                  <p>
+                    Barman: {{ booking.barman.firstName }}
+                    {{ booking.barman.lastName }}
+                  </p>
+                  <p>Dettagli: {{ booking.eventDetails }}</p>
+                  <button
+                    type="button"
+                    class="custom-btn"
+                    (click)="openBookingModal(contentBooking, booking)"
+                  >
+                    Modifica
+                  </button>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
         <div *ngIf="confirmedBookings.length > 0" class="mt-4">
-            <h3>Confermate</h3>
-            <div *ngIf="confirmedBookings.length === 0" class="alert alert-light" role="alert">
-                Nessuna prenotazione confermata.
-            </div>
-            <div ngbAccordion [closeOthers]="true">
-                <div *ngFor="let booking of confirmedBookings" ngbAccordionItem>
-                    <h2 ngbAccordionHeader>
-                        <button ngbAccordionButton>{{booking.city}} - {{booking.date}}</button>
-                    </h2>
-                    <div ngbAccordionCollapse>
-                        <div ngbAccordionBody class="accordion-body-custom">
-                            <p>Barman: {{booking.barman.firstName}} {{booking.barman.lastName}}</p>
-                            <p>Dettagli: {{booking.eventDetails}}</p>
-                            <button type="button" class="custom-btn" (click)="confirmDeleteBooking(booking.id)">Elimina</button>
-                        </div>
-                    </div>
+          <h3>Confermate</h3>
+          <div
+            *ngIf="confirmedBookings.length === 0"
+            class="alert alert-light"
+            role="alert"
+          >
+            Nessuna prenotazione confermata.
+          </div>
+          <div ngbAccordion [closeOthers]="true">
+            <div *ngFor="let booking of confirmedBookings" ngbAccordionItem>
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>
+                  {{ booking.city }} - {{ booking.date }}
+                </button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="accordion-body-custom">
+                  <p>
+                    Barman: {{ booking.barman.firstName }}
+                    {{ booking.barman.lastName }}
+                  </p>
+                  <p>Dettagli: {{ booking.eventDetails }}</p>
+                  <button
+                    type="button"
+                    class="custom-btn"
+                    (click)="confirmDeleteBooking(booking.id)"
+                  >
+                    Elimina
+                  </button>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </ng-template>
+      </ng-template>
     </li>
     <li ngbNavItem>
       <a ngbNavLink> Richieste </a>
       <ng-template ngbNavContent>
-        <div *ngIf="quotations.length == 0" class="alert alert-light" role="alert">
+        <div
+          *ngIf="quotations.length == 0"
+          class="alert alert-light"
+          role="alert"
+        >
           Nessuna richiesta di quotazione effettuata.
         </div>
 
@@ -66,13 +107,27 @@
           <div ngbAccordion [closeOthers]="true" *ngIf="quotations.length > 0">
             <div *ngFor="let quotation of quotations" ngbAccordionItem>
               <h2 ngbAccordionHeader>
-                <button ngbAccordionButton>{{quotation.city}} - {{quotation.requestDate}}</button>
+                <button ngbAccordionButton>
+                  {{ quotation.city }} - {{ quotation.requestDate }}
+                </button>
               </h2>
               <div ngbAccordionCollapse>
                 <div ngbAccordionBody>
-                  <p>Dettagli: {{quotation.eventDetails}}</p>
-                  <button type="button" class="custom-btn me-2" (click)="openQuotationModal(contentQuotation, quotation)">Modifica</button>
-                  <button type="button" class="custom-btn" (click)="deleteQuotation(quotation.id)">Elimina</button>
+                  <p>Dettagli: {{ quotation.eventDetails }}</p>
+                  <button
+                    type="button"
+                    class="custom-btn me-2"
+                    (click)="openQuotationModal(contentQuotation, quotation)"
+                  >
+                    Modifica
+                  </button>
+                  <button
+                    type="button"
+                    class="custom-btn"
+                    (click)="deleteQuotation(quotation.id)"
+                  >
+                    Elimina
+                  </button>
                 </div>
               </div>
             </div>
@@ -86,88 +141,162 @@
   <ng-template #contentBooking let-modal>
     <div class="modal-header">
       <h4 class="modal-title">Modifica Prenotazione</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
     </div>
     <div class="modal-body">
       <form [formGroup]="bookingForm">
-        <div class="mb-3">
-          <label for="date" class="form-label">Data</label>
-          <input type="date" class="form-control" id="date" formControlName="date" required>
-          <div *ngIf="bookingForm.controls['date'].touched && bookingForm.controls['date'].invalid" class="text-danger">
-            La data è obbligatoria.
-          </div>
+        <label for="date" class="form-check-label">Data</label>
+        <div class="inputContainer mb-3">
+          <input
+            type="date"
+            class="inputField"
+            [ngClass]="{'is-invalid': bookingForm.controls['date'].invalid && (bookingForm.controls['date'].dirty || bookingForm.controls['date'].touched)}"
+            id="date"
+            formControlName="date"
+            required
+          />
         </div>
-        <div class="mb-3">
-          <label for="time" class="form-label">Ora</label>
-          <input type="time" id="time" class="form-control" formControlName="time" required>
-          <div *ngIf="bookingForm.controls['time'].touched && bookingForm.controls['time'].invalid" class="text-danger">
-            L'ora è obbligatoria.
-          </div>
+        <label for="time" class="form-check-label">Ora</label>
+        <div class="inputContainer mb-3">
+          <input
+            type="time"
+            id="time"
+            class="inputField"
+            [ngClass]="{'is-invalid': bookingForm.controls['time'].invalid && (bookingForm.controls['time'].dirty || bookingForm.controls['time'].touched)}"
+            formControlName="time"
+            required
+          />
         </div>
-        <div class="mb-3">
-          <label for="eventDetail" class="form-label">Dettaglio Evento</label>
-          <textarea class="form-control" id="eventDetail" formControlName="eventDetails" rows="3" required maxlength="300"></textarea>
-          <div *ngIf="bookingForm.controls['eventDetails'].touched && bookingForm.controls['eventDetails'].invalid" class="text-danger">
-            <div *ngIf="bookingForm.controls['eventDetails'].errors?.['required']">Il dettaglio dell'evento è obbligatorio.</div>
-            <div *ngIf="bookingForm.controls['eventDetails'].errors?.['maxlength']">Il dettaglio dell'evento non può superare i 300 caratteri.</div>
-          </div>
+        <label for="eventDetail" class="form-check-label"
+          >Dettaglio Evento</label
+        >
+        <div class="inputContainer mb-3">
+          <textarea
+            class="inputField"
+            [ngClass]="{'is-invalid': bookingForm.controls['eventDetails'].invalid && (bookingForm.controls['eventDetails'].dirty || bookingForm.controls['eventDetails'].touched)}"
+            id="eventDetail"
+            formControlName="eventDetails"
+            rows="3"
+            required
+            maxlength="300"
+          ></textarea>
         </div>
-        <div class="mb-3">
-          <label for="city" class="form-label">Città</label>
-          <input type="text" class="form-control" id="city" formControlName="city" required>
-          <div *ngIf="bookingForm.controls['city'].touched && bookingForm.controls['city'].invalid" class="text-danger">
-            La città è obbligatoria.
-          </div>
+        <label for="city" class="form-check-label">Città</label>
+        <div class="inputContainer mb-3">
+          <input
+            type="text"
+            class="inputField"
+            [ngClass]="{'is-invalid': bookingForm.controls['city'].invalid && (bookingForm.controls['city'].dirty || bookingForm.controls['city'].touched)}"
+            id="city"
+            formControlName="city"
+            required
+          />
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annulla</button>
-      <button type="button" class="btn btn-primary" [disabled]="!bookingForm.valid" (click)="saveBooking()">Salva</button>
+      <button
+        type="button"
+        class="custom-btn"
+        (click)="modal.dismiss('cancel click')"
+      >
+        Annulla
+      </button>
+      <button
+        type="button"
+        class="custom-btn"
+        [disabled]="!bookingForm.valid"
+        (click)="saveBooking()"
+      >
+        Salva
+      </button>
     </div>
   </ng-template>
 
   <ng-template #contentQuotation let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">Modifica Richiesta di Quotazione</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      <h4 class="modal-title">Modifica Quotazione</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
     </div>
     <div class="modal-body">
       <form [formGroup]="quotationForm">
-        <div class="mb-3">
-          <label for="requestDate" class="form-label">Data</label>
-          <input type="date" class="form-control" id="requestDate" name="requestDate" formControlName="requestDate" required>
-          <div *ngIf="quotationForm.controls['requestDate']?.touched && quotationForm.controls['requestDate']?.invalid" class="text-danger">
-            La data è obbligatoria.
-          </div>
+        <label for="requestDate" class="form-check-label">Data</label>
+        <div class="inputContainer mb-3">
+          <input
+            type="date"
+            class="inputField"
+            [ngClass]="{'is-invalid': quotationForm.controls['requestDate'].invalid && (quotationForm.controls['requestDate'].dirty || quotationForm.controls['requestDate'].touched)}"
+            id="requestDate"
+            name="requestDate"
+            formControlName="requestDate"
+            required
+          />
         </div>
-        <div class="mb-3">
-          <label for="requestTime" class="form-label">Ora</label>
-          <input type="time" id="requestTime" class="form-control" formControlName="requestTime" name="requestTime" required>
-          <div *ngIf="quotationForm.controls['requestTime']?.touched && quotationForm.controls['requestTime']?.invalid" class="text-danger">
-            L'ora è obbligatoria.
-          </div>
+        <label for="requestTime" class="form-check-label">Ora</label>
+        <div class="inputContainer mb-3">
+          <input
+            type="time"
+            id="requestTime"
+            class="inputField"
+            [ngClass]="{'is-invalid': quotationForm.controls['requestTime'].invalid && (quotationForm.controls['requestTime'].dirty || quotationForm.controls['requestTime'].touched)}"
+            formControlName="requestTime"
+            name="requestTime"
+            required
+          />
         </div>
-        <div class="mb-3">
-          <label for="eventDetail" class="form-label">Dettaglio Evento</label>
-          <textarea class="form-control" id="eventDetail" name="eventDetails" rows="3" formControlName="eventDetails" required maxlength="300"></textarea>
-          <div *ngIf="quotationForm.controls['eventDetails']?.touched && quotationForm.controls['eventDetails']?.invalid" class="text-danger">
-            <div *ngIf="quotationForm.controls['eventDetails']?.errors?.['required']">Il dettaglio dell'evento è obbligatorio.</div>
-            <div *ngIf="quotationForm.controls['eventDetails']?.errors?.['maxlength']">Il dettaglio dell'evento non può superare i 300 caratteri.</div>
-          </div>
+        <label for="eventDetail" class="form-check-label">Dettaglio Evento</label>
+        <div class="inputContainer mb-3">
+          <textarea
+            class="inputField"
+            [ngClass]="{'is-invalid': quotationForm.controls['eventDetails'].invalid && (quotationForm.controls['eventDetails'].dirty || quotationForm.controls['eventDetails'].touched)}"
+            id="eventDetail"
+            name="eventDetails"
+            rows="3"
+            formControlName="eventDetails"
+            required
+            maxlength="300"
+          ></textarea>
         </div>
-        <div class="mb-3">
-          <label for="city" class="form-label">Città</label>
-          <input type="text" class="form-control" id="city" name="city" formControlName="city" required>
-          <div *ngIf="quotationForm.controls['city']?.touched && quotationForm.controls['city']?.invalid" class="text-danger">
-            La città è obbligatoria.
-          </div>
+        <label for="city" class="form-check-label">Città</label>
+        <div class="inputContainer mb-3">
+          <input
+            type="text"
+            class="inputField"
+            [ngClass]="{'is-invalid': quotationForm.controls['city'].invalid && (quotationForm.controls['city'].dirty || quotationForm.controls['city'].touched)}"
+            id="city"
+            name="city"
+            formControlName="city"
+            required
+          />
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annulla</button>
-      <button type="button" class="btn btn-primary" [disabled]="!quotationForm.valid" (click)="saveQuotation()">Salva</button>
+      <button
+        type="button"
+        class="custom-btn"
+        (click)="modal.dismiss('cancel click')"
+      >
+        Annulla
+      </button>
+      <button
+        type="button"
+        class="custom-btn"
+        [disabled]="!quotationForm.valid"
+        (click)="saveQuotation()"
+      >
+        Salva
+      </button>
     </div>
   </ng-template>
 </div>
