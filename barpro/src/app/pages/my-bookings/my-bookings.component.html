@@ -33,19 +33,20 @@
             <div *ngFor="let booking of pendingBookings" ngbAccordionItem>
               <h2 ngbAccordionHeader>
                 <button ngbAccordionButton>
-                  {{ booking.city }} - {{ booking.date }}
+                  {{ booking.city }} - {{ booking.date | date: 'dd/MM/yyyy - HH:mm'}}
                 </button>
               </h2>
               <div ngbAccordionCollapse>
                 <div ngbAccordionBody class="accordion-body-custom">
-                  <p>
-                    Barman: {{ booking.barman.firstName }}
-                    {{ booking.barman.lastName }}
-                  </p>
-                  <p>Dettagli: {{ booking.eventDetails }}</p>
+                  <h5>
+                    Barman
+                  </h5>
+                  <p>{{ booking.barman.firstName }} {{ booking.barman.lastName }}</p>
+                  <h5>Dettagli</h5>
+                  <p>{{ booking.eventDetails }}</p>
                   <button
                     type="button"
-                    class="custom-btn me-2"
+                    class="custom-btn me-2 mt-3"
                     (click)="openBookingModal(contentBooking, booking)"
                   >
                     Modifica
@@ -75,19 +76,20 @@
             <div *ngFor="let booking of confirmedBookings" ngbAccordionItem>
               <h2 ngbAccordionHeader>
                 <button ngbAccordionButton>
-                  {{ booking.city }} - {{ booking.date }}
+                  {{ booking.city }} - {{ booking.date |date: 'dd/MM/yyyy - HH:mm' }}
                 </button>
               </h2>
               <div ngbAccordionCollapse>
                 <div ngbAccordionBody class="accordion-body-custom">
-                  <p>
-                    Barman: {{ booking.barman.firstName }}
-                    {{ booking.barman.lastName }}
-                  </p>
-                  <p>Dettagli: {{ booking.eventDetails }}</p>
+                  <h5>
+                    Barman
+                  </h5>
+                  <p>{{ booking.barman.firstName }} {{ booking.barman.lastName }}</p>
+                  <h5>Dettagli</h5>
+                  <p>{{ booking.eventDetails }}</p>
                   <button
                     type="button"
-                    class="custom-btn"
+                    class="custom-btn mt-3"
                     (click)="confirmDeleteBooking(booking.id)"
                   >
                     Elimina
@@ -115,15 +117,16 @@
             <div *ngFor="let quotation of quotations" ngbAccordionItem>
               <h2 ngbAccordionHeader>
                 <button ngbAccordionButton>
-                  {{ quotation.city }} - {{ quotation.requestDate }}
+                  {{ quotation.city }} - {{ quotation.requestDate | date: 'dd/MM/yyyy - HH:mm' }}
                 </button>
               </h2>
               <div ngbAccordionCollapse>
                 <div ngbAccordionBody>
-                  <p>Dettagli: {{ quotation.eventDetails }}</p>
+                  <h5>Dettagli</h5>
+                  <p>{{ quotation.eventDetails }}</p>
                   <button
                     type="button"
-                    class="custom-btn me-2"
+                    class="custom-btn me-2 mt-3"
                     (click)="openQuotationModal(contentQuotation, quotation)"
                   >
                     Modifica
