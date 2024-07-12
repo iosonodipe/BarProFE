@@ -16,11 +16,12 @@ export class AcceptQuotationComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private quotationService: QuotationService
+    private quotationService: QuotationService,
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+
       const id = +params['id'];
       const idBarman = +params['idBarman'];
       this.acceptQuotation(id, idBarman);
