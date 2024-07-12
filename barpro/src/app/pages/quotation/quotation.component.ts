@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { IQuotation } from '../../models/i-quotation';
 import { QuotationService } from './quotation.service';
+import { LoaderService } from '../../main-components/loader/loader.service';
 
 @Component({
   selector: 'app-quotation',
@@ -23,7 +24,8 @@ export class QuotationComponent implements OnInit {
   constructor(
     private quotationService: QuotationService,
     private modalService: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loader: LoaderService
   ) {
     this.quotationForm = this.fb.group({
       priceDetails: ['', Validators.required]
@@ -55,14 +57,23 @@ export class QuotationComponent implements OnInit {
   }
 
   confirmQuotation(modal: any): void {
+    this.loader.showLoading()
     if (this.currentQuotation) {
       const priceDetails = this.quotationForm.get('priceDetails')?.value;
       const barmanId = this.getBarmanIdFromLocalStorage();
       this.quotationService.respondToQuotation(this.currentQuotation.id, barmanId, priceDetails).subscribe(() => {
-        Swal.fire('Proposta inviata', 'La tua proposta è stata inviata con successo!', 'success');
-        this.loadQuotations();
         modal.close();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Proposta inviata!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.loader.hideLoading();
+        this.loadQuotations();
       }, (error) => {
+        this.loader.hideLoading();
         Swal.fire('Errore', 'Si è verificato un errore durante l\'invio della proposta', 'error');
       });
     }

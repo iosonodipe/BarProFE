@@ -59,6 +59,12 @@ fa-icon{
   h2{
     color: white;
     font-size: 3rem;
+    text-shadow:
+    3px 3px 0 #000,
+  -2px -2px 0 #000,
+   2px -2px 0 #000,
+   -2px 2px 0 #000,
+    2px 2px 0 #000;
   }
   a{
     text-decoration: none;
