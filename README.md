@@ -1,4 +1,3 @@
-BarPRO
 BarPRO aims to simplify the process of connecting final customers with professional bartenders. Do you want to organize a home party with friends or a private event?
 By registering as a user, you can access the list of all bartenders and have the opportunity to contact them directly, communicating all the details of your event, or you can post a global request visible to all professionals, allowing you to evaluate the best offers!
 On the other hand, if you are a freelance bartender looking to expand your business, by creating your profile you will exponentially increase your visibility: you will receive requests from all customers and have the opportunity to evaluate all the quotes posted on the portal!
