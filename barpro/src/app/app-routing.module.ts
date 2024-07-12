@@ -72,8 +72,6 @@ const routes: Routes = [
       import('./pages/accept-quotation/accept-quotation.module').then(
         (m) => m.AcceptQuotationModule
       ),
-      canActivate: [UserGuard],
-      canActivateChild: [UserGuard],
   },
   {
     path: 'confirm-booking/:id',
@@ -81,8 +79,6 @@ const routes: Routes = [
       import('./pages/confirm-booking/confirm-booking.module').then(
         (m) => m.ConfirmBookingModule
       ),
-      canActivate: [BarmanGuard],
-      canActivateChild: [BarmanGuard],
   },
   {
     path: 'user-profile',

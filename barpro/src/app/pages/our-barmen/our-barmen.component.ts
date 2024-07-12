@@ -113,6 +113,8 @@ export class OurBarmenComponent implements OnInit {
               this.router.navigate(['/my-bookings']);
             },
             error => {
+              this.loader.hideLoading();
+              // this.modalService.dismissAll()
               console.error('Error creating booking: ', error);
             }
           );

@@ -8,6 +8,13 @@
 </section>
 
 <div class="container mt-5">
+  <div
+          *ngIf="pendingBookings.length === 0 && confirmedBookings.length === 0"
+          class="alert alert-light"
+          role="alert"
+        >
+          Nessuna prenotazione effettuata.
+        </div>
   <div *ngIf="pendingBookings.length > 0">
     <h3>In attesa</h3>
     <div ngbAccordion [closeOthers]="true">
@@ -26,13 +33,13 @@
             <button type="button" class="custom-btn me-2 mt-3" (click)="confirmBooking(booking.id)">
               Conferma
             </button>
+            <button type="button" class="custom-btn mt-3" (click)="confirmDeleteBooking(booking.id)">
+              Rifiuta
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="pendingBookings.length == 0" class="alert alert-light" role="alert">
-    Nessuna prenotazione pending trovata.
   </div>
 
   <div *ngIf="confirmedBookings.length > 0" class="mt-4">
@@ -57,8 +64,5 @@
         </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="confirmedBookings.length == 0" class="alert alert-light" role="alert">
-    Nessuna prenotazione confermata trovata.
   </div>
 </div>

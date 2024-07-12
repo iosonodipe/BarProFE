@@ -9,6 +9,7 @@ import { AuthService } from '../../auth/auth.service';
 import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { IQuotationRequest } from '../../models/i-quotation-request';
 import Swal from 'sweetalert2';
+import { LoaderService } from '../../main-components/loader/loader.service';
 
 @Component({
   selector: 'app-my-bookings',
@@ -32,7 +33,8 @@ export class MyBookingsComponent implements OnInit {
     private modalService: NgbModal,
     private bookingService: BookingService,
     private quotationService: QuotationService,
-    private authService: AuthService
+    private authService: AuthService,
+    private loader: LoaderService
   ) {
     this.bookingForm = this.fb.group({
       date: ['', Validators.required],
@@ -174,6 +176,8 @@ export class MyBookingsComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.currentBooking) {
+          this.modalService.dismissAll()
+          this.loader.showLoading()
           const updatedBooking = {
             idUser: this.currentBooking.user.id,
             idBarman: this.currentBooking.barman.id,
@@ -186,6 +190,7 @@ export class MyBookingsComponent implements OnInit {
           this.bookingService
             .updateBooking(this.currentBooking.id, updatedBooking)
             .subscribe(() => {
+              this.loader.hideLoading();
               Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -256,8 +261,10 @@ export class MyBookingsComponent implements OnInit {
       cancelButtonText: 'No, annulla'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loader.showLoading()
         this.bookingService.deleteBooking(id).subscribe(() => {
           this.loadBookings();
+          this.loader.hideLoading()
           Swal.fire({
             position: "top-end",
             icon: "success",

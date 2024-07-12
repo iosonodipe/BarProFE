@@ -6,6 +6,7 @@ import { AuthService } from '../../auth/auth.service';
 import { IUser } from '../../models/i-user';
 import Swal from 'sweetalert2';
 import { faEnvelope, faCity, faUser } from '@fortawesome/free-solid-svg-icons';
+import { LoaderService } from '../../main-components/loader/loader.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,7 +25,8 @@ export class UserProfileComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private laoder: LoaderService
   ) {
     this.editForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -56,12 +58,14 @@ export class UserProfileComponent implements OnInit {
   loadAvatar(username: string): void {
     this.userService.getUserAvatar(username).subscribe(url => {
       this.avatarUrl = url;
+      this.laoder.hideLoading()
     });
   }
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
+      this.laoder.showLoading()
       this.updateAvatar(file);
     }
   }
@@ -69,7 +73,13 @@ export class UserProfileComponent implements OnInit {
   updateAvatar(file: File): void {
     if (this.user) {
       this.userService.updateAvatar(this.user.username, file).subscribe(() => {
-        Swal.fire('Aggiornato!', 'L\'avatar è stato aggiornato con successo.', 'success');
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Avatar aggiornato!",
+          showConfirmButton: false,
+          timer: 1500
+        });
         this.loadAvatar(this.user!.username);
       }, error => {
         Swal.fire('Errore!', 'Si è verificato un errore durante l\'aggiornamento dell\'avatar.', 'error');
@@ -108,8 +118,13 @@ export class UserProfileComponent implements OnInit {
 
 
       this.userService.updateUser(this.user.id, updatedUser).subscribe(() => {
-        Swal.fire('Modificato!', 'I dati dell\'utente sono stati aggiornati con successo.', 'success');
-        this.loadUserProfile();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "I tuoi dati sono stati aggiornati!",
+          showConfirmButton: false,
+          timer: 1500
+        });        this.loadUserProfile();
         modal.close();
       }, error => {
         Swal.fire('Errore!', 'Si è verificato un errore durante l\'aggiornamento dei dati.', 'error');

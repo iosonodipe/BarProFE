@@ -46,10 +46,11 @@ export class MyEventsComponent implements OnInit {
       text: "Il cliente verrà avvisato via mail",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Sì, elimina',
-      cancelButtonText: 'No, annulla'
+      confirmButtonText: 'Conferma',
+      cancelButtonText: 'Annulla'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loader.showLoading()
         this.deleteBooking(id);
       }
     });
@@ -57,6 +58,7 @@ export class MyEventsComponent implements OnInit {
 
   deleteBooking(id: number): void {
     this.bookingService.deleteBooking(id).subscribe(() => {
+      this.loader.hideLoading();
       Swal.fire({
         position: "top-end",
         icon: "success",

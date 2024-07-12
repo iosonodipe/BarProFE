@@ -128,7 +128,13 @@ export class BarmanProfileComponent implements OnInit {
 
 
       this.barmanService.updateBarman(this.barman.id, updatedBarman).subscribe(() => {
-        Swal.fire('Modificato!', 'I dati del barman sono stati aggiornati con successo.', 'success');
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "I tuoi dati sono stati aggiornati!",
+          showConfirmButton: false,
+          timer: 1500
+        });
         this.loadBarmanProfile();
         modal.close();
       }, error => {
