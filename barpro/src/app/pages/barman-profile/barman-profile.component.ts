@@ -5,6 +5,8 @@ import { BarmanService } from '../barman/barman.service';
 import { AuthService } from '../../auth/auth.service';
 import { IBarman } from '../../models/i-barman';
 import Swal from 'sweetalert2';
+import { LoaderService } from '../../main-components/loader/loader.service';
+import { faCity, faEnvelope, faSortNumericDown, faTextWidth, faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-barman-profile',
@@ -15,12 +17,22 @@ export class BarmanProfileComponent implements OnInit {
   barman: IBarman | null = null;
   avatarUrl: string | null = null;
   editForm: FormGroup;
+  mail = faEnvelope
+  city = faCity
+  username = faUser
+  description = faTextWidth
+  years = faSortNumericDown
+
+
+
+
 
   constructor(
     private barmanService: BarmanService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private loader: LoaderService
   ) {
     this.editForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -52,12 +64,14 @@ export class BarmanProfileComponent implements OnInit {
   loadAvatar(username: string): void {
     this.barmanService.getUserAvatar(username).subscribe(url => {
       this.avatarUrl = url;
+      this.loader.hideLoading();
     });
   }
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
+      this.loader.showLoading()
       this.updateAvatar(file);
     }
   }
@@ -65,7 +79,13 @@ export class BarmanProfileComponent implements OnInit {
   updateAvatar(file: File): void {
     if (this.barman) {
       this.barmanService.updateAvatar(this.barman.username, file).subscribe(() => {
-        Swal.fire('Aggiornato!', 'L\'avatar è stato aggiornato con successo.', 'success');
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Avatar aggiornato!",
+          showConfirmButton: false,
+          timer: 1500
+        });
         this.loadAvatar(this.barman!.username);
       }, error => {
         Swal.fire('Errore!', 'Si è verificato un errore durante l\'aggiornamento dell\'avatar.', 'error');

@@ -5,6 +5,7 @@ import { UserService } from '../user-profile/user.service';
 import { AuthService } from '../../auth/auth.service';
 import { IUser } from '../../models/i-user';
 import Swal from 'sweetalert2';
+import { faEnvelope, faCity, faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,6 +16,9 @@ export class UserProfileComponent implements OnInit {
   user: IUser | null = null;
   avatarUrl: string | null = null;
   editForm: FormGroup;
+  mail = faEnvelope
+  city = faCity
+  username = faUser
 
   constructor(
     private userService: UserService,

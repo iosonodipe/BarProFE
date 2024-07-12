@@ -1,21 +1,43 @@
 <div class="container mt-5">
-  <div class="row">
-    <div class="col-md-4 text-center">
-      <img [src]="avatarUrl" alt="Avatar" class="img-fluid rounded-circle mb-3" *ngIf="avatarUrl">
-      <img src="/assets/img/avatar.webp" alt="Avatar" class="img-fluid rounded-circle mb-3" *ngIf="!avatarUrl">
-      <div class="mb-3">
+  <div class="row g-5">
+    <div class="col-md-5 text-center d-flex flex-column justify-content-center position-relative">
+      <div class="avatar-container">
+        <img [src]="avatarUrl" alt="Avatar" class="avatar-img mb-3" *ngIf="avatarUrl">
+        <img src="/assets/img/avatar.webp" alt="Avatar" class="avatar-img mb-3" *ngIf="!avatarUrl">
+        <div class="overlay" (click)="fileInput.click()">
+          <span class="overlay-text">Modifica</span>
+        </div>
         <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput>
-        <button class="btn btn-primary" (click)="fileInput.click()">Aggiorna</button>
       </div>
     </div>
-    <div class="col-md-8">
-      <h3>{{barman?.firstName}} {{barman?.lastName}}</h3>
-      <p><strong>Email:</strong> {{barman?.email}}</p>
-      <p><strong>Città:</strong> {{barman?.city}}</p>
-      <p><strong>Username:</strong> {{barman?.username}}</p>
-      <p><strong>Descrizione:</strong> {{barman?.description}}</p>
-      <p><strong>Anni di esperienza:</strong> {{barman?.experienceYears}}</p>
-      <button class="btn btn-primary mt-3" (click)="openEditModal(editContent)">Modifica dati utente</button>
+    <div class="col-md-7 user-data">
+      <h3 class="mb-4">{{barman?.firstName}} {{barman?.lastName}}</h3>
+      <div class="d-flex border-bottom mb-1">
+        <fa-icon [icon]="mail"></fa-icon>
+        <h5 class="mb-1 ms-2">Email</h5>
+      </div>
+      <p class="fs-5 mb-4">{{barman?.email}}</p>
+      <div class="d-flex border-bottom mb-1">
+        <fa-icon [icon]="city"></fa-icon>
+        <h5 class="mb-1 ms-2">Città</h5>
+      </div>
+      <p class="fs-5 mb-4">{{barman?.city}}</p>
+      <div class="d-flex border-bottom mb-1">
+        <fa-icon [icon]="username"></fa-icon>
+        <h5 class="mb-1 ms-2">Username</h5>
+      </div>
+      <p class="fs-5 mb-4">{{barman?.username}}</p>
+      <div class="d-flex border-bottom mb-1">
+        <fa-icon [icon]="description"></fa-icon>
+        <h5 class="mb-1 ms-2">Descrizione</h5>
+      </div>
+      <p class="fs-5 mb-4">{{barman?.description}}</p>
+      <div class="d-flex border-bottom mb-1">
+        <fa-icon [icon]="years"></fa-icon>
+        <h5 class="mb-1 ms-2">Anni di esperienza</h5>
+      </div>
+      <p class="fs-5 mb-4">{{barman?.experienceYears}}</p>
+      <button class="custom-btn mt-3" (click)="openEditModal(editContent)">Modifica dati</button>
     </div>
   </div>
 </div>
@@ -28,57 +50,93 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="editForm">
-      <div class="mb-3">
-        <label for="firstName" class="form-label">Nome</label>
-        <input type="text" id="firstName" class="form-control" formControlName="firstName">
-        <div *ngIf="editForm.controls['firstName'].invalid && (editForm.controls['firstName'].dirty || editForm.controls['firstName'].touched)" class="text-danger">
-          Nome è obbligatorio
-        </div>
+      <label for="firstName" class="form-check-label">Nome</label>
+      <div class="inputContainer mb-3">
+        <input
+          type="text"
+          class="inputField"
+          [ngClass]="{'is-invalid': editForm.controls['firstName'].invalid && (editForm.controls['firstName'].dirty || editForm.controls['firstName'].touched)}"
+          id="firstName"
+          formControlName="firstName"
+          required
+        />
       </div>
-      <div class="mb-3">
-        <label for="lastName" class="form-label">Cognome</label>
-        <input type="text" id="lastName" class="form-control" formControlName="lastName">
-        <div *ngIf="editForm.controls['lastName'].invalid && (editForm.controls['lastName'].dirty || editForm.controls['lastName'].touched)" class="text-danger">
-          Cognome è obbligatorio
-        </div>
+
+      <label for="lastName" class="form-check-label">Cognome</label>
+      <div class="inputContainer mb-3">
+        <input
+          type="text"
+          class="inputField"
+          [ngClass]="{'is-invalid': editForm.controls['lastName'].invalid && (editForm.controls['lastName'].dirty || editForm.controls['lastName'].touched)}"
+          id="lastName"
+          formControlName="lastName"
+          required
+        />
       </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" id="email" class="form-control" formControlName="email">
-        <div *ngIf="editForm.controls['email'].invalid && (editForm.controls['email'].dirty || editForm.controls['email'].touched)" class="text-danger">
-          Email è obbligatoria e deve essere valida
-        </div>
+
+      <label for="email" class="form-check-label">Email</label>
+      <div class="inputContainer mb-3">
+        <input
+          type="email"
+          class="inputField"
+          [ngClass]="{'is-invalid': editForm.controls['email'].invalid && (editForm.controls['email'].dirty || editForm.controls['email'].touched)}"
+          id="email"
+          formControlName="email"
+          required
+        />
       </div>
-      <div class="mb-3">
-        <label for="city" class="form-label">Città</label>
-        <input type="text" id="city" class="form-control" formControlName="city">
-        <div *ngIf="editForm.controls['city'].invalid && (editForm.controls['city'].dirty || editForm.controls['city'].touched)" class="text-danger">
-          Città è obbligatoria
-        </div>
+
+      <label for="city" class="form-check-label">Città</label>
+      <div class="inputContainer mb-3">
+        <input
+          type="text"
+          class="inputField"
+          [ngClass]="{'is-invalid': editForm.controls['city'].invalid && (editForm.controls['city'].dirty || editForm.controls['city'].touched)}"
+          id="city"
+          formControlName="city"
+          required
+        />
       </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" class="form-control" formControlName="password">
-        <!-- Password is not required, so no validation message here -->
+
+      <label for="password" class="form-check-label">Password</label>
+      <div class="inputContainer mb-3">
+        <input
+          type="password"
+          class="inputField"
+          id="password"
+          formControlName="password"
+          placeholder="Se lasciato vuoto manterrai la stessa password"
+        />
       </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Descrizione</label>
-        <textarea id="description" class="form-control" formControlName="description"></textarea>
-        <div *ngIf="editForm.controls['description'].invalid && (editForm.controls['description'].dirty || editForm.controls['description'].touched)" class="text-danger">
-          Descrizione è obbligatoria
-        </div>
+
+      <label for="description" class="form-check-label">Descrizione</label>
+      <div class="inputContainer mb-3">
+        <textarea
+          class="inputField"
+          [ngClass]="{'is-invalid': editForm.controls['description'].invalid && (editForm.controls['description'].dirty || editForm.controls['description'].touched)}"
+          id="description"
+          formControlName="description"
+          rows="3"
+          required
+          maxlength="300"
+        ></textarea>
       </div>
-      <div class="mb-3">
-        <label for="experienceYears" class="form-label">Anni di esperienza</label>
-        <input type="number" id="experienceYears" class="form-control" formControlName="experienceYears">
-        <div *ngIf="editForm.controls['experienceYears'].invalid && (editForm.controls['experienceYears'].dirty || editForm.controls['experienceYears'].touched)" class="text-danger">
-          Anni di esperienza è obbligatorio
-        </div>
+
+      <label for="experienceYears" class="form-check-label">Anni di esperienza</label>
+      <div class="inputContainer mb-3">
+        <input
+          type="number"
+          class="inputField"
+          [ngClass]="{'is-invalid': editForm.controls['experienceYears'].invalid && (editForm.controls['experienceYears'].dirty || editForm.controls['experienceYears'].touched)}"
+          id="experienceYears"
+          formControlName="experienceYears"
+          required
+        />
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annulla</button>
-    <button type="button" class="btn btn-primary" [disabled]="editForm.invalid" (click)="updateBarman(modal)">Modifica</button>
+    <button type="button" class="custom-btn" (click)="modal.dismiss('cancel click')">Annulla</button>
+    <button type="button" class="custom-btn" [disabled]="editForm.invalid" (click)="updateBarman(modal)">Modifica</button>
   </div>
 </ng-template>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BarmanProfileRoutingModule } from './barman-profile-routing.module';
 import { BarmanProfileComponent } from './barman-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     BarmanProfileRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ]
 })
 export class BarmanProfileModule { }

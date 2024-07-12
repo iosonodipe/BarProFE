@@ -1,0 +1,113 @@
+$primary: #E43d12;
+$secondary: #db5d3e;
+$tertiary: #ebe9e1;
+
+.user-data{
+  border-left: 2px solid $secondary ;
+  padding-left: 30px;
+}
+
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.avatar-img:hover {
+  opacity: 0.7;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(106, 104, 104, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.overlay-text {
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.avatar-container:hover .overlay {
+  opacity: 1;
+}
+
+.avatar-img {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  max-height: 400px;
+  border-radius: 50%;
+  object-fit: cover; /* Ensures the image covers the entire container while maintaining aspect ratio */
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+.inputContainer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 3px;
+}
+
+.inputField {
+  width: 100%;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid rgb(173, 173, 173);
+  margin: 10px 0;
+  color: black;
+  font-size: 1em;
+  font-weight: 500;
+  box-sizing: border-box;
+
+  transition: border-bottom-color 0.5s ease;
+}
+
+.inputField:focus {
+  outline: none;
+  // border-bottom: 2px solid $primary;
+}
+
+textarea{
+  min-height: 100px;
+}
+
+.inputField.is-invalid {
+  border-bottom-color: red;
+}
+
+.inputField.description-field {
+  height: 100px;
+  resize: vertical;
+  min-height: 100px;
+  max-height: 300px;
+  padding-top: 10px;
+  line-height: 1.5;
+}
+
+.inputField::placeholder {
+  color: rgb(80, 80, 80);
+  font-size: 1em;
+  font-weight: 500;
+}
