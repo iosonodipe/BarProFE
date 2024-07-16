@@ -1,7 +1,8 @@
 
 <div class="card" (click)="onCardClick()">
   <div class="card-image">
-    <img [src]="barman.avatar" alt="" />
+    <img *ngIf="barman.avatar" [src]="barman.avatar" alt="" />
+    <img *ngIf="!barman.avatar" src="/assets/img/avatar.webp" alt="" />
   </div>
   <div class="category">rating {{ barman.rating }} su 5</div>
   <div class="heading">
