@@ -40,6 +40,8 @@ For the backend run:
 mvn clean install
 mvn spring-boot:run
 
+Swagger:
+http://localhost:8080/swagger-ui.html
 
 📦 Configure PostgreSQL
 Create a database named backend and configure your application.properties file in the backend with your PostgreSQL credentials.
