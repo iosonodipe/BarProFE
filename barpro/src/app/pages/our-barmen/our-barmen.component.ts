@@ -95,6 +95,7 @@ export class OurBarmenComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.loader.showLoading()
+        this.modalService.dismissAll();
         if (form.valid) {
           this.setUserFromLocalStorage();
           this.bookingRequest.date = this.formatLocalDateTime(this.bookingRequest.date, this.bookingRequest.time); // Formatta la data e l'orario per il server
